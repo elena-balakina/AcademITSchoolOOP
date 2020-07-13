@@ -76,14 +76,14 @@ public class Main {
     }
 
     public static Shape getMaxArea(Shape[] shapes) {
-        Comparator areaComparator = new AreaComparator();
+        Comparator<Shape> areaComparator = new AreaComparator();
         Arrays.sort(shapes, areaComparator);
 
         return shapes[shapes.length - 1];
     }
 
     public static Shape getSecondMaxPerimeter(Shape[] shapes) {
-        Comparator perimeterComparator = new PerimeterComparator();
+        Comparator<Shape> perimeterComparator = new PerimeterComparator();
         Arrays.sort(shapes, perimeterComparator);
 
         return shapes[shapes.length - 2];
