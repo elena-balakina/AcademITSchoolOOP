@@ -4,7 +4,7 @@ import ru.academits.balakina.range.Range;
 
 import java.util.Scanner;
 
-import static ru.academits.balakina.range.Range.printArrayOfRange;
+import static ru.academits.balakina.range.Range.printRangesArray;
 
 public class Main {
     public static void main(String[] args) {
@@ -39,24 +39,28 @@ public class Main {
 
         System.out.printf("Длина второго интервала = %.2f%n", range2.getLength());
 
-        Range intersection = range1.getIntersectionWith(range2);
+        System.out.println("Пересечение интервалов: ");
+
+        Range intersection = range1.getIntersection(range2);
 
         if (intersection == null) {
             System.out.println("Интервалы не пересекаются");
         } else {
-            System.out.printf("Пересечение интервалов: [%.2f; %.2f]%n", intersection.getFrom(), intersection.getTo());
+            System.out.println(intersection.toString());
         }
 
         System.out.println("Объединение интервалов: ");
 
-        printArrayOfRange(range1.getUnionWith(range2));
+        printRangesArray(range1.getUnion(range2));
 
         System.out.println("Разность интервалов: ");
 
-        if (range2.getDifferenceFrom(range1).length == 0) {
+        Range[] difference = range1.getDifference(range2);
+
+        if (difference.length == 0) {
             System.out.println("Разность интервалов является пустым множеством");
         } else {
-            printArrayOfRange(range2.getDifferenceFrom(range1));
+            printRangesArray(difference);
         }
     }
 }
