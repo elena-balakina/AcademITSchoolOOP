@@ -2,6 +2,8 @@ package ru.academits.balakina.vector_main;
 
 import ru.academits.balakina.vector.Vector;
 
+import static ru.academits.balakina.vector.Vector.*;
+
 public class Main {
     public static void main(String[] args) {
         Vector vector1 = new Vector(3);
@@ -16,6 +18,18 @@ public class Main {
         System.out.printf("Компоненты вектора 2: %s%n", vector2.toString());
         System.out.println();
 
+        Vector vector3 = new Vector(vector2);
+
+        System.out.printf("Размерность вектора 3 = %d%n", vector3.getSize());
+        System.out.printf("Компоненты вектора 3: %s%n", vector3.toString());
+        System.out.println();
+
+        Vector vector4 = new Vector(10, new double[]{4.0, -3.0, 5.0, 6.0});
+
+        System.out.printf("Размерность вектора 4 = %d%n", vector4.getSize());
+        System.out.printf("Компоненты вектора 4: %s%n", vector4.toString());
+        System.out.println();
+/*
         // СЛОЖЕНИЕ
         vector1.add(vector2);
         System.out.printf("Вектор 1 + Вектор 2 = : %s%n", vector1.toString());
@@ -37,6 +51,10 @@ public class Main {
         System.out.printf("Первый компонент Вектора 2 = : %.2f%n", vector2.getComponent(0));
 
         vector2.setComponent(0, 0);
-        System.out.printf("Первый компонент Вектора 2 стал = : %.2f%n", vector2.getComponent(0));
+        System.out.printf("Первый компонент Вектора 2 стал = : %.2f%n", vector2.getComponent(0)); */
+
+        System.out.printf("Вектор 2 + Вектор 3 = : %s%n", (add(vector2, vector3)).toString());
+        System.out.printf("Вектор 2 - Вектор 3 = : %s%n", (subtract(vector2, vector3)).toString());
+        System.out.printf("Вектор 2 * Вектор 3 = : %.2f%n", scalarMultiplication(vector2, vector3));
     }
 }

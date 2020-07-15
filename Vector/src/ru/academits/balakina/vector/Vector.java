@@ -11,6 +11,9 @@ public class Vector {
     }
 
     // b.	Vector(Vector) – конструктор копирования
+    public Vector(Vector vector) {
+        components = Arrays.copyOf(vector.components, vector.getSize());
+    }
 
     // c.	Vector(double[]) – заполнение вектора значениями из массива
     public Vector(double[] components) {
@@ -18,6 +21,9 @@ public class Vector {
     }
 
     // d.	Vector(n, double[]) – заполнение вектора значениями из массива. Если длина массива меньше n, то считать что в остальных компонентах 0
+    public Vector(int dimension, double[] components) {
+        this.components = Arrays.copyOf(components, dimension);
+    }
 
     public int getSize() {
         return components.length;
@@ -30,7 +36,7 @@ public class Vector {
         stringBuilder.append("{ ");
 
         for (double component : components) {
-            stringBuilder.append(component + ", ");
+            stringBuilder.append(component).append(", ");
         }
 
         stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
@@ -49,6 +55,33 @@ public class Vector {
         }
     }
 
+    public static Vector add(Vector vector1, Vector vector2) {
+        Vector vectorCopy = new Vector(vector1);
+
+        vectorCopy.add(vector2);
+
+        return vectorCopy;
+
+        /*int maxDimension = Math.max(vector1.getSize(), vector2.getSize());
+        Vector result = new Vector(maxDimension);
+
+
+        if (vector1.getSize() > vector2.getSize()) {
+            Vector vectorCopy = new Vector(Arrays.copyOf(vector2.components, maxDimension));
+            result.add(vector1);
+            result.add(vectorCopy);
+        } else if (vector1.getSize() < vector2.getSize()) {
+            Vector vectorCopy = new Vector(Arrays.copyOf(vector1.components, maxDimension));
+            result.add(vectorCopy);
+            result.add(vector2);
+        }
+
+        result.add(vector1);
+        result.add(vector2);
+
+        return result;*/
+    }
+
     public void subtract(Vector vector) {
         int maxDimension = Math.max(this.getSize(), vector.getSize());
 
@@ -59,10 +92,29 @@ public class Vector {
         }
     }
 
+    public static Vector subtract(Vector vector1, Vector vector2) {
+        Vector vectorCopy = new Vector(vector1);
+
+        vectorCopy.subtract(vector2);
+
+        return vectorCopy;
+    }
+
     public void multiplyByScalar(int scalar) {
         for (int i = 0; i < this.getSize(); i++) {
             components[i] *= scalar;
         }
+    }
+
+    public static double scalarMultiplication(Vector vector1, Vector vector2) {
+        int minDimension = Math.min(vector1.getSize(), vector2.getSize());
+        double result = 0;
+
+        for (int i = 0; i < minDimension; i++) {
+            result += vector1.components[i] * vector2.components[i];
+        }
+
+        return result;
     }
 
     public void reverseVector() {
