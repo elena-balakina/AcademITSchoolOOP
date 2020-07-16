@@ -65,6 +65,9 @@ public class Triangle implements Shape {
         this.y3 = y3;
     }
 
+    public double getSide(double x1, double y1, double x2, double y2) {
+        return Math.sqrt(Math.pow(x1 - x2, 2.0) + Math.pow(y1 - y2, 2.0));
+    }
 
     @Override
     public double getWidth() {
@@ -78,16 +81,11 @@ public class Triangle implements Shape {
 
     @Override
     public double getArea() {
-        //return Math.abs(0.5 * ((x1 - x3) * (y2 - y3) - (x2 - x3) * (y1 - y3)));
         return Math.abs(0.5 * ((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1)));
     }
 
     @Override
     public double getPerimeter() {
-        double side1 = Math.sqrt(Math.pow(x1 - x2, 2.0) + Math.pow(y1 - y2, 2.0));
-        double side2 = Math.sqrt(Math.pow(x2 - x3, 2.0) + Math.pow(y2 - y3, 2.0));
-        double side3 = Math.sqrt(Math.pow(x3 - x1, 2.0) + Math.pow(y3 - y1, 2.0));
-
-        return side1 + side2 + side3;
+        return getSide(x1, y1, x2, y2) + getSide(x2, y2, x3, y3) + getSide(x3, y3, x1, y1);
     }
 }
