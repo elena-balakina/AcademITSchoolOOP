@@ -4,8 +4,6 @@ import ru.academits.balakina.range.Range;
 
 import java.util.Scanner;
 
-import static ru.academits.balakina.range.Range.printRangesArray;
-
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -46,21 +44,17 @@ public class Main {
         if (intersection == null) {
             System.out.println("Интервалы не пересекаются");
         } else {
-            System.out.println(intersection.toString());
+            System.out.println(intersection);
         }
 
         System.out.println("Объединение интервалов: ");
 
-        printRangesArray(range1.getUnion(range2));
+        Range.printRanges(range1.getUnion(range2));
 
         System.out.println("Разность интервалов: ");
 
         Range[] difference = range1.getDifference(range2);
 
-        if (difference.length == 0) {
-            System.out.println("Разность интервалов является пустым множеством");
-        } else {
-            printRangesArray(difference);
-        }
+        Range.printRanges(difference);
     }
 }

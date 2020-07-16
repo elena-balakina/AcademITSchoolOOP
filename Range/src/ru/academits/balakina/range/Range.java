@@ -50,7 +50,7 @@ public class Range {
     }
 
     public Range[] getDifference(Range range) {
-        if (to <= range.from) {
+        if (to <= range.from || range.to <= from) {
             return new Range[]{new Range(from, to)};
         }
 
@@ -69,9 +69,13 @@ public class Range {
         return new Range[]{};
     }
 
-    public static void printRangesArray(Range[] range) {
-        for (Range r : range) {
-            System.out.printf("[%.2f; %.2f]%n", r.from, r.to);
+    public static void printRanges(Range[] ranges) {
+        if (ranges.length == 0) {
+            System.out.println("Разность интервалов является пустым множеством");
+        } else {
+            for (Range r : ranges) {
+                System.out.println(r);
+            }
         }
     }
 
