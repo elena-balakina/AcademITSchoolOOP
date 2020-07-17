@@ -1,5 +1,7 @@
 package ru.academits.balakina.shapes;
 
+import java.util.Objects;
+
 public class Triangle implements Shape {
     private double x1;
     private double y1;
@@ -87,5 +89,35 @@ public class Triangle implements Shape {
     @Override
     public double getPerimeter() {
         return getSide(x1, y1, x2, y2) + getSide(x2, y2, x3, y3) + getSide(x3, y3, x1, y1);
+    }
+
+    @Override
+    public String toString() {
+        return "Треугольник {" +
+                "x1 = " + x1 +
+                ", y1 = " + y1 +
+                ", x2 = " + x2 +
+                ", y2 = " + y2 +
+                ", x3 = " + x3 +
+                ", y3 = " + y3 +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Triangle triangle = (Triangle) o;
+        return Double.compare(triangle.x1, x1) == 0 &&
+                Double.compare(triangle.y1, y1) == 0 &&
+                Double.compare(triangle.x2, x2) == 0 &&
+                Double.compare(triangle.y2, y2) == 0 &&
+                Double.compare(triangle.x3, x3) == 0 &&
+                Double.compare(triangle.y3, y3) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x1, y1, x2, y2, x3, y3);
     }
 }

@@ -57,40 +57,14 @@ public class Main {
         Shape shapeWithMaxArea = getShapeWithMaxArea(shapes);
 
         System.out.print("Фигура с максимальной площадью: ");
-
-        if (shapeWithMaxArea instanceof Circle){
-            System.out.println("КРУГ");
-        } else if(shapeWithMaxArea instanceof Triangle){
-            System.out.println("ТРЕУГОЛЬНИК");
-        } else if(shapeWithMaxArea instanceof Square){
-            System.out.println("КВАДРАТ");
-        } else {
-            System.out.println("ПРЯМОУГОЛЬНИК");
-        }
-
-        System.out.printf("Ширина фигуры = %.2f%n", shapeWithMaxArea.getWidth());
-        System.out.printf("Высота фигуры = %.2f%n", shapeWithMaxArea.getHeight());
+        System.out.println(shapeWithMaxArea);
         System.out.printf("Площадь фигуры = %.2f%n", shapeWithMaxArea.getArea());
-        System.out.printf("Периметр фигуры = %.2f%n", shapeWithMaxArea.getPerimeter());
         System.out.println();
 
         Shape shapeWithSecondMaxPerimeter = getShapeWithSecondMaxPerimeter(shapes);
 
         System.out.print("Фигура со вторым по величине периметром: ");
-
-        if (shapeWithSecondMaxPerimeter instanceof Circle){
-            System.out.println("КРУГ");
-        } else if(shapeWithSecondMaxPerimeter instanceof Triangle){
-            System.out.println("ТРЕУГОЛЬНИК");
-        } else if(shapeWithSecondMaxPerimeter instanceof Square){
-            System.out.println("КВАДРАТ");
-        } else {
-            System.out.println("ПРЯМОУГОЛЬНИК");
-        }
-
-        System.out.printf("Ширина фигуры = %.2f%n", shapeWithSecondMaxPerimeter.getWidth());
-        System.out.printf("Высота фигуры = %.2f%n", shapeWithSecondMaxPerimeter.getHeight());
-        System.out.printf("Площадь фигуры = %.2f%n", shapeWithSecondMaxPerimeter.getArea());
+        System.out.println(shapeWithSecondMaxPerimeter);
         System.out.printf("Периметр фигуры = %.2f%n", shapeWithSecondMaxPerimeter.getPerimeter());
         System.out.println();
     }
