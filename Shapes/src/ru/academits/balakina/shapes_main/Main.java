@@ -2,14 +2,12 @@ package ru.academits.balakina.shapes_main;
 
 import ru.academits.balakina.shapes.*;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class Main {
     public static void main(String[] args) {
-        Square square1 = new Square(5);
+        Square square1 = new Square(25.1);
 
         System.out.printf("Ширина квадрата 1 = %.2f%n", square1.getWidth());
         System.out.printf("Высота квадрата 1 = %.2f%n", square1.getHeight());
@@ -17,7 +15,7 @@ public class Main {
         System.out.printf("Периметр квадрата 1 = %.2f%n", square1.getPerimeter());
         System.out.println();
 
-        Square square2 = new Square(15);
+        Square square2 = new Square(25.2);
 
         System.out.printf("Ширина квадрата 2 = %.2f%n", square2.getWidth());
         System.out.printf("Высота квадрата 2 = %.2f%n", square2.getHeight());
@@ -50,13 +48,13 @@ public class Main {
         System.out.println();
 
         Shape[] shapes = new Shape[]{
-                new Square(5),
-                new Square(15),
+                new Square(25.1),
+                new Square(25.2),
                 new Triangle(-1, -3, 3, 4, 5, -5),
                 new Rectangle(10, 5),
                 new Circle(5)};
 
-        Shape shapeWithMaxArea = getMaxArea(shapes);
+        Shape shapeWithMaxArea = getShapeWithMaxArea(shapes);
 
         System.out.print("Фигура с максимальной площадью: ");
 
@@ -76,7 +74,7 @@ public class Main {
         System.out.printf("Периметр фигуры = %.2f%n", shapeWithMaxArea.getPerimeter());
         System.out.println();
 
-        Shape shapeWithSecondMaxPerimeter = getSecondMaxPerimeter(shapes);
+        Shape shapeWithSecondMaxPerimeter = getShapeWithSecondMaxPerimeter(shapes);
 
         System.out.print("Фигура со вторым по величине периметром: ");
 
@@ -97,14 +95,14 @@ public class Main {
         System.out.println();
     }
 
-    public static Shape getMaxArea(Shape[] shapes) {
+    public static Shape getShapeWithMaxArea(Shape[] shapes) {
         Comparator<Shape> areaComparator = new AreaComparator();
         Arrays.sort(shapes, areaComparator);
 
         return shapes[shapes.length - 1];
     }
 
-    public static Shape getSecondMaxPerimeter(Shape[] shapes) {
+    public static Shape getShapeWithSecondMaxPerimeter(Shape[] shapes) {
         Comparator<Shape> perimeterComparator = new PerimeterComparator();
         Arrays.sort(shapes, perimeterComparator);
 
