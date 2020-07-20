@@ -71,7 +71,7 @@ public class Range {
 
     public static void printRanges(Range[] ranges) {
         if (ranges.length == 0) {
-            System.out.println("Разность интервалов является пустым множеством");
+            System.out.println("Пустое множество");
         } else {
             for (Range r : ranges) {
                 System.out.println(r);

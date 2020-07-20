@@ -1,12 +1,17 @@
 package ru.academits.balakina.vector;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Vector {
     private double[] components;
 
     // a.	Vector(n) – размерность n, все компоненты равны 0
     public Vector(int dimension) {
+        if(dimension <= 0){
+            throw new IllegalArgumentException("Размерность вектора должна быть больше нуля");
+        }
+
         this.components = new double[dimension];
     }
 
@@ -17,11 +22,19 @@ public class Vector {
 
     // c.	Vector(double[]) – заполнение вектора значениями из массива
     public Vector(double[] components) {
+        if(components.length == 0){
+            throw new IllegalArgumentException("Размерность вектора должна быть больше нуля");
+        }
+
         this.components = Arrays.copyOf(components, components.length);
     }
 
     // d.	Vector(n, double[]) – заполнение вектора значениями из массива. Если длина массива меньше n, то считать что в остальных компонентах 0
     public Vector(int dimension, double[] components) {
+        if(dimension <= 0){
+            throw new IllegalArgumentException("Размерность вектора должна быть больше нуля");
+        }
+
         this.components = Arrays.copyOf(components, dimension);
     }
 
@@ -46,9 +59,9 @@ public class Vector {
     }
 
     public void add(Vector vector) {
-        int maxDimension = Math.max(this.getSize(), vector.getSize());
-
-        // TODO: заполнить нулями остаток меньшего вектора
+        if (vector.components.length > components.length){
+            components = Arrays.copyOf(components, vector.components.length);
+        }
 
         for (int i = 0; i < vector.getSize(); i++) {
             components[i] += vector.components[i];
@@ -56,36 +69,17 @@ public class Vector {
     }
 
     public static Vector add(Vector vector1, Vector vector2) {
-        Vector vectorCopy = new Vector(vector1);
+        Vector vectorResult = new Vector(vector1);
 
-        vectorCopy.add(vector2);
+        vectorResult.add(vector2);
 
-        return vectorCopy;
-
-        /*int maxDimension = Math.max(vector1.getSize(), vector2.getSize());
-        Vector result = new Vector(maxDimension);
-
-
-        if (vector1.getSize() > vector2.getSize()) {
-            Vector vectorCopy = new Vector(Arrays.copyOf(vector2.components, maxDimension));
-            result.add(vector1);
-            result.add(vectorCopy);
-        } else if (vector1.getSize() < vector2.getSize()) {
-            Vector vectorCopy = new Vector(Arrays.copyOf(vector1.components, maxDimension));
-            result.add(vectorCopy);
-            result.add(vector2);
-        }
-
-        result.add(vector1);
-        result.add(vector2);
-
-        return result;*/
+        return vectorResult;
     }
 
     public void subtract(Vector vector) {
-        int maxDimension = Math.max(this.getSize(), vector.getSize());
-
-        // TODO: заполнить нулями остаток меньшего вектора
+        if (vector.components.length > components.length){
+            components = Arrays.copyOf(components, vector.components.length);
+        }
 
         for (int i = 0; i < vector.getSize(); i++) {
             components[i] -= vector.components[i];
@@ -93,11 +87,11 @@ public class Vector {
     }
 
     public static Vector subtract(Vector vector1, Vector vector2) {
-        Vector vectorCopy = new Vector(vector1);
+        Vector vectorResult = new Vector(vector1);
 
-        vectorCopy.subtract(vector2);
+        vectorResult.subtract(vector2);
 
-        return vectorCopy;
+        return vectorResult;
     }
 
     public void multiplyByScalar(int scalar) {
@@ -131,11 +125,28 @@ public class Vector {
         return Math.sqrt(result);
     }
 
-    public double getComponent(int index) {
+    public double getComponentByIndex(int index) {
         return this.components[index];
     }
 
-    public void setComponent(double value, int index) {
+    public void setComponentByIndex(double value, int index) {
         this.components[index] = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vector vector = (Vector) o;
+        return Arrays.equals(components, vector.components) && (this.components.length == vector.components.length);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(components, components.length);
+
+        result = 37 * result + Arrays.hashCode(components);
+
+        return result;
     }
 }
