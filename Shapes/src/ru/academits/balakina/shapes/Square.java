@@ -46,14 +46,23 @@ public class Square implements Shape {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
         Square square = (Square) o;
-        return Double.compare(square.side, side) == 0;
+        return square.side == side;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(side);
+        final int prime = 37;
+        int hash = 1;
+        hash = prime * hash + Double.hashCode(side);
+        return hash;
     }
 }
