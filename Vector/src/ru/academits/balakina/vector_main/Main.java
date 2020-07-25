@@ -62,8 +62,11 @@ public class Main {
         // Установка компонента вектора по индексу
         vector2.setComponentByIndex(0, 0);
         System.out.printf("Первый компонент Вектора 2 после изменения его на 0 = : %.2f%n", vector2.getComponentByIndex(0));
+        System.out.println();
 
         // Статические методы
+        System.out.printf("Вектор 2: %s%n", vector2);
+        System.out.printf("Вектор 3: %s%n", vector3);
         System.out.printf("Вектор 2 + Вектор 3 = : %s%n", add(vector2, vector3));
         System.out.printf("Вектор 2 - Вектор 3 = : %s%n", subtract(vector2, vector3));
         System.out.printf("Вектор 4 * Вектор 2 = : %.2f%n", scalarMultiplication(vector4, vector2));
