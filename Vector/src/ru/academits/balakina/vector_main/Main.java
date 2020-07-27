@@ -50,11 +50,11 @@ public class Main {
         System.out.printf("Вектор 2 * %d = : %s%n", scalar, vector2);
 
         // РАЗВОРОТ ВЕКТОРА (умножение всех компонент на -1)
-        vector2.reverseVector();
+        vector2.reverse();
         System.out.printf("Вектор 2. Разворот = : %s%n", vector2);
 
         // Получение длины вектора
-        System.out.printf("Длина Вектора 2 = : %.2f%n", vector2.vectorLength());
+        System.out.printf("Длина Вектора 2 = : %.2f%n", vector2.getLength());
 
         // Получение компонента вектора по индексу
         System.out.printf("Первый компонент Вектора 2 = : %.2f%n", vector2.getComponentByIndex(0));
@@ -67,8 +67,8 @@ public class Main {
         // Статические методы
         System.out.printf("Вектор 2: %s%n", vector2);
         System.out.printf("Вектор 3: %s%n", vector3);
-        System.out.printf("Вектор 2 + Вектор 3 = : %s%n", add(vector2, vector3));
-        System.out.printf("Вектор 2 - Вектор 3 = : %s%n", subtract(vector2, vector3));
-        System.out.printf("Вектор 4 * Вектор 2 = : %.2f%n", scalarMultiplication(vector4, vector2));
+        System.out.printf("Вектор 2 + Вектор 3 = : %s%n", getSum(vector2, vector3));
+        System.out.printf("Вектор 2 - Вектор 3 = : %s%n", getDifference(vector2, vector3));
+        System.out.printf("Вектор 4 * Вектор 2 = : %.2f%n", getScalarMultiplication(vector4, vector2));
     }
 }
