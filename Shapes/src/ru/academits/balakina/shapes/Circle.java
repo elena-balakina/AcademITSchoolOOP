@@ -1,7 +1,5 @@
 package ru.academits.balakina.shapes;
 
-import java.util.Objects;
-
 public class Circle implements Shape {
     private double radius;
 

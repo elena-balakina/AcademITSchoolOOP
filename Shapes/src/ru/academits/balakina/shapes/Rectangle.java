@@ -1,7 +1,5 @@
 package ru.academits.balakina.shapes;
 
-import java.util.Objects;
-
 public class Rectangle implements Shape {
     private double width;
     private double height;
@@ -52,6 +50,7 @@ public class Rectangle implements Shape {
         if (this == o) {
             return true;
         }
+
         if (o == null || getClass() != o.getClass()) {
             return false;
         }

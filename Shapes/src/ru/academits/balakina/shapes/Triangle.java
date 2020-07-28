@@ -1,7 +1,5 @@
 package ru.academits.balakina.shapes;
 
-import java.util.Objects;
-
 public class Triangle implements Shape {
     private double x1;
     private double y1;
