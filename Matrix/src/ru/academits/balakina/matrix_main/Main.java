@@ -8,6 +8,14 @@ import static ru.academits.balakina.matrix.Matrix.subtract;
 
 public class Main {
     public static void main(String[] args) {
+        // Проверяем исключение в конструкторе
+        try {
+            Matrix matrixWithError = new Matrix(-5, -5);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+            System.out.println();
+        }
+
         // Проверяем конструктор а. Matrix(n, m) – матрица нулей размера nxm
         Matrix matrixA = new Matrix(3, 3);
 
@@ -23,7 +31,7 @@ public class Main {
         System.out.println();
 
         // Проверяем конструктор c.	Matrix(double[][]) – из двумерного массива
-        double[][] array = {{1.0, 2.0}, {1.0, 2.0}, {1.0, 2.0}};
+        double[][] array = {{1.0, 2.0, 0.0}, {1.0, 2.0}, {1.0, 2.0}};
         Matrix matrixC = new Matrix(array);
 
         System.out.println(matrixC);
@@ -76,6 +84,13 @@ public class Main {
         System.out.println("Зададим первую строку матрицы С - {10.0, 10.0}");
         matrixC.setRowByIndex(new Vector(new double[]{10.0, 10.0}), 0);
         System.out.println("Теперь первая строка матрицы С: " + matrixC.getRowByIndex(0));
+        System.out.println();
+
+        // Умножение матрицы на вектор
+        Vector vector = new Vector(new double[]{1.0, 2.0, 3.0});
+        System.out.println("Матрица C: " + matrixC);
+        System.out.println("Вектор: " + vector);
+        System.out.printf("Матрица C * Вектор: %s%n", matrixC.multiplyByVector(vector));
         System.out.println();
 
         // Статические методы - сложение матриц

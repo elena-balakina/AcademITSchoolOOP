@@ -1,17 +1,18 @@
 package ru.academits.balakina.matrix;
 
-
 import ru.academits.balakina.vector.Vector;
 
 import java.util.Arrays;
-
-import static ru.academits.balakina.vector.Vector.scalarMultiplication;
 
 public class Matrix {
     private Vector[] rows;
 
     // a.	Matrix(n, m) – матрица нулей размера nxm
     public Matrix(int n, int m) {
+        if (n <= 0 || m <= 0) {
+            throw new IllegalArgumentException("Размерность матрицы должна быть больше нуля");
+        }
+
         rows = new Vector[n];
 
         for (int i = 0; i < n; i++) {
@@ -79,6 +80,9 @@ public class Matrix {
 
     // Сложение матриц
     public Matrix add(Matrix matrix) {
+        if (getRowsCount() != matrix.getRowsCount() || getColumnsCount() != matrix.getColumnsCount()) {
+            throw new IllegalArgumentException("При сложении размерности матриц должны быть одинаковыми");
+        }
 
         for (int i = 0; i < getRowsCount(); i++) {
             rows[i].add(matrix.rows[i]);
@@ -89,6 +93,9 @@ public class Matrix {
 
     // Вычитание матриц
     public Matrix subtract(Matrix matrix) {
+        if (getRowsCount() != matrix.getRowsCount() || getColumnsCount() != matrix.getColumnsCount()) {
+            throw new IllegalArgumentException("При вычитании размерности матриц должны быть одинаковыми");
+        }
 
         for (int i = 0; i < getRowsCount(); i++) {
             rows[i].subtract(matrix.rows[i]);
@@ -111,7 +118,7 @@ public class Matrix {
         Vector column = new Vector(this.getRowsCount());
 
         for (int i = 0; i < getRowsCount(); i++) {
-            column.setComponentByIndex(rows[i].getComponentByIndex(index), i);
+            column.setComponentByIndex(i, rows[i].getComponentByIndex(index));
         }
 
         return column;
@@ -124,11 +131,15 @@ public class Matrix {
 
     // Задание вектора-строки по индексу
     public void setRowByIndex(Vector vector, int index) {
+        if (vector.getSize() > rows[index].getSize()) {
+            throw new IllegalArgumentException("Размер вектора превышает размер строки матрицы");
+        }
+
         if (vector.getSize() < rows[index].getSize()) {
 
             Vector vectorCopy = new Vector(rows[index].getSize());
             for (int i = 0; i < vector.getSize(); i++) {
-                vectorCopy.setComponentByIndex(vector.getComponentByIndex(i), i);
+                vectorCopy.setComponentByIndex(i, vector.getComponentByIndex(i));
             }
 
             rows[index] = vectorCopy;
@@ -138,8 +149,37 @@ public class Matrix {
         rows[index] = vector;
     }
 
+    // Умножение матрицы на вектор
+    public Vector multiplyByVector(Vector vector) {
+        if (vector.getSize() != getColumnsCount()) {
+            throw new IllegalArgumentException("Количество компонентов вектора должно быть равно количеству столбцов матрицы");
+        }
+
+        Vector result = new Vector(this.getRowsCount());
+
+        for (int i = 0; i < this.getRowsCount(); i++) {
+            double value = 0;
+
+            for (int j = 0; j < rows[i].getSize(); j++) {
+                value = rows[i].getComponentByIndex(j) * vector.getComponentByIndex(j);
+            }
+
+            result.setComponentByIndex(i, value);
+        }
+
+        return result;
+    }
+
+    // TODO: Транспонирование матрицы
+
+    // TODO: Вычисление определител матрицы
+
+
     // Статические методы - сложение матриц
     public static Matrix add(Matrix matrix1, Matrix matrix2) {
+        if (matrix1.getRowsCount() != matrix2.getRowsCount() || matrix1.getColumnsCount() != matrix2.getColumnsCount()) {
+            throw new IllegalArgumentException("При сложении размерности матриц должны быть одинаковыми");
+        }
 
         Matrix matrixResult = new Matrix(matrix1);
 
@@ -150,6 +190,9 @@ public class Matrix {
 
     // Статические методы - вычитание матриц
     public static Matrix subtract(Matrix matrix1, Matrix matrix2) {
+        if (matrix1.getRowsCount() != matrix2.getRowsCount() || matrix1.getColumnsCount() != matrix2.getColumnsCount()) {
+            throw new IllegalArgumentException("При вычитании размерности матриц должны быть одинаковыми");
+        }
 
         Matrix matrixResult = new Matrix(matrix1);
 
