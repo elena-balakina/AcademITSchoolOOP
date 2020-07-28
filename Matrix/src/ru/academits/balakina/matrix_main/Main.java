@@ -3,8 +3,7 @@ package ru.academits.balakina.matrix_main;
 import ru.academits.balakina.matrix.Matrix;
 import ru.academits.balakina.vector.Vector;
 
-import static ru.academits.balakina.matrix.Matrix.add;
-import static ru.academits.balakina.matrix.Matrix.subtract;
+import static ru.academits.balakina.matrix.Matrix.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -52,13 +51,13 @@ public class Main {
         System.out.println();
 
         // Проверка сложения матриц
-        System.out.printf("Матрица А + Матрица В: %s%n", matrixA.add(matrixB));
-        System.out.printf("Матрица А + Матрица C: %s%n", matrixA.add(matrixC));
-        System.out.printf("Матрица C + Матрица D: %s%n", matrixC.add(matrixD));
+        System.out.printf("Матрица А + Матрица В: %s%n", matrixA.getSum(matrixB));
+        System.out.printf("Матрица А + Матрица C: %s%n", matrixA.getSum(matrixC));
+        System.out.printf("Матрица C + Матрица D: %s%n", matrixC.getSum(matrixD));
 
         // Проверка вычитания матриц
-        System.out.printf("Матрица C - Матрица D: %s%n", matrixC.subtract(matrixD));
-        System.out.printf("Матрица C - {-10, -20, -30}: %s%n", matrixC.subtract(
+        System.out.printf("Матрица C - Матрица D: %s%n", matrixC.getDifference(matrixD));
+        System.out.printf("Матрица C - {-10, -20, -30}: %s%n", matrixC.getDifference(
                 new Matrix(new double[][]{{-10.0, -20.0, -30.0}, {-10.0, -20.0, -30.0}, {-10.0, -20.0, -30.0}})));
         System.out.println();
 
@@ -77,12 +76,12 @@ public class Main {
 
         // Задание вектора-строки по индексу
         System.out.println("Зададим первую строку матрицы С - {4.0, -3.0, 5.0}");
-        matrixC.setRowByIndex(new Vector(new double[]{4.0, -3.0, 5.0}), 0);
+        matrixC.setRowByIndex(0, new Vector(new double[]{4.0, -3.0, 5.0}));
         System.out.println("Теперь первая строка матрицы С: " + matrixC.getRowByIndex(0));
         System.out.println();
 
         System.out.println("Зададим первую строку матрицы С - {10.0, 10.0}");
-        matrixC.setRowByIndex(new Vector(new double[]{10.0, 10.0}), 0);
+        matrixC.setRowByIndex(0, new Vector(new double[]{10.0, 10.0}));
         System.out.println("Теперь первая строка матрицы С: " + matrixC.getRowByIndex(0));
         System.out.println();
 
@@ -96,12 +95,24 @@ public class Main {
         // Статические методы - сложение матриц
         System.out.println("Матрица A: " + matrixA);
         System.out.println("Матрица С: " + matrixC);
-        System.out.println("Матрица A + Матрица С: " + add(matrixA, matrixC));
+        System.out.println("Матрица A + Матрица С: " + getSum(matrixA, matrixC));
         System.out.println();
 
         // Статические методы - вычитание матриц
         System.out.println("Матрица A: " + matrixA);
         System.out.println("Матрица С: " + matrixC);
-        System.out.println("Матрица A - Матрица С: " + subtract(matrixA, matrixC));
+        System.out.println("Матрица A - Матрица С: " + getDifference(matrixA, matrixC));
+        System.out.println();
+
+        // Статические методы - умножение матриц
+        Matrix matrixForMultiplication1 = new Matrix(new double[][]{{1.0, 2.0, 1.0}, {0.0, 1.0, 2.0}});
+        Matrix matrixForMultiplication2 = new Matrix(new double[][]{{1.0, 0.0}, {0.0, 1.0}, {1.0, 1.0}});
+        System.out.println("Матрица 1 для умножения: " + matrixForMultiplication1);
+        System.out.println("Матрица 2 для умножения: " + matrixForMultiplication2);
+        System.out.println("Результат умножения матриц: " + getMultiplication(matrixForMultiplication1, matrixForMultiplication2));
+        System.out.println();
+
+
+
     }
 }

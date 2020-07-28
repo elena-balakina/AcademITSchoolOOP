@@ -79,7 +79,7 @@ public class Matrix {
     }
 
     // Сложение матриц
-    public Matrix add(Matrix matrix) {
+    public Matrix getSum(Matrix matrix) {
         if (getRowsCount() != matrix.getRowsCount() || getColumnsCount() != matrix.getColumnsCount()) {
             throw new IllegalArgumentException("При сложении размерности матриц должны быть одинаковыми");
         }
@@ -92,7 +92,7 @@ public class Matrix {
     }
 
     // Вычитание матриц
-    public Matrix subtract(Matrix matrix) {
+    public Matrix getDifference(Matrix matrix) {
         if (getRowsCount() != matrix.getRowsCount() || getColumnsCount() != matrix.getColumnsCount()) {
             throw new IllegalArgumentException("При вычитании размерности матриц должны быть одинаковыми");
         }
@@ -130,7 +130,7 @@ public class Matrix {
     }
 
     // Задание вектора-строки по индексу
-    public void setRowByIndex(Vector vector, int index) {
+    public void setRowByIndex(int index, Vector vector) {
         if (vector.getSize() > rows[index].getSize()) {
             throw new IllegalArgumentException("Размер вектора превышает размер строки матрицы");
         }
@@ -172,38 +172,55 @@ public class Matrix {
 
     // TODO: Транспонирование матрицы
 
-    // TODO: Вычисление определител матрицы
+    // TODO: Вычисление определителя матрицы
 
 
     // Статические методы - сложение матриц
-    public static Matrix add(Matrix matrix1, Matrix matrix2) {
+    public static Matrix getSum(Matrix matrix1, Matrix matrix2) {
         if (matrix1.getRowsCount() != matrix2.getRowsCount() || matrix1.getColumnsCount() != matrix2.getColumnsCount()) {
             throw new IllegalArgumentException("При сложении размерности матриц должны быть одинаковыми");
         }
 
         Matrix matrixResult = new Matrix(matrix1);
 
-        matrixResult.add(matrix2);
+        matrixResult.getSum(matrix2);
 
         return matrixResult;
     }
 
     // Статические методы - вычитание матриц
-    public static Matrix subtract(Matrix matrix1, Matrix matrix2) {
+    public static Matrix getDifference(Matrix matrix1, Matrix matrix2) {
         if (matrix1.getRowsCount() != matrix2.getRowsCount() || matrix1.getColumnsCount() != matrix2.getColumnsCount()) {
             throw new IllegalArgumentException("При вычитании размерности матриц должны быть одинаковыми");
         }
 
         Matrix matrixResult = new Matrix(matrix1);
 
-        matrixResult.subtract(matrix2);
+        matrixResult.getDifference(matrix2);
 
         return matrixResult;
     }
 
-    // TODO: Статические методы - умножение матриц
-    public static Matrix multiply(Matrix matrix1, Matrix matrix2) {
-        return null;
+    // Статические методы - умножение матриц
+    public static Matrix getMultiplication(Matrix matrix1, Matrix matrix2) {
+        if (matrix1.getColumnsCount() != matrix2.getRowsCount()) {
+            throw new IllegalArgumentException("При перемножении матриц число столбцов первой матрицы должно быть равно числу строк второй");
+        }
+
+        Matrix matrixResult = new Matrix(matrix1.getRowsCount(), matrix2.getColumnsCount());
+
+        for (int i = 0; i < matrix1.getRowsCount(); i++) {
+            Vector vector = new Vector(matrix1.getRowsCount());
+
+            for (int j = 0; j < matrix2.getColumnsCount(); j++) {
+
+                vector.setComponentByIndex(j, Vector.getScalarMultiplication(matrix1.rows[i], matrix2.getColumnByIndex(j)));
+            }
+
+            matrixResult.setRowByIndex(i, vector);
+        }
+
+        return matrixResult;
     }
 
     @Override
