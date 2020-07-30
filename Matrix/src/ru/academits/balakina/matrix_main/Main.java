@@ -118,7 +118,5 @@ public class Main {
         matrixForTranspose.transpose();
         System.out.println("Результат транспонирования матрицы: " + matrixForTranspose);
         System.out.println();
-
-
     }
 }
