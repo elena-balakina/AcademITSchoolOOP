@@ -171,6 +171,18 @@ public class Matrix {
     }
 
     // TODO: Транспонирование матрицы
+    public void transpose() {
+        Matrix matrixCopy = new Matrix(this);
+        Vector[] newRows = new Vector[getColumnsCount()];
+
+        rows = new Vector[matrixCopy.getColumnsCount()];
+
+        for (int i = 0; i < matrixCopy.getColumnsCount(); i++) {
+            newRows[i] = matrixCopy.getColumnByIndex(i);
+        }
+
+        rows = newRows;
+    }
 
     // TODO: Вычисление определителя матрицы
 

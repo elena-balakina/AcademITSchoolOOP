@@ -112,6 +112,12 @@ public class Main {
         System.out.println("Результат умножения матриц: " + getMultiplication(matrixForMultiplication1, matrixForMultiplication2));
         System.out.println();
 
+        // Транспонирование матрицы
+        Matrix matrixForTranspose = new Matrix(new double[][]{{1.0, 2.0}, {0.0, 1.0}, {3.0, 4.0}});
+        System.out.println("Матрица для транспонирования: " + matrixForTranspose);
+        matrixForTranspose.transpose();
+        System.out.println("Результат транспонирования матрицы: " + matrixForTranspose);
+        System.out.println();
 
 
     }
