@@ -118,5 +118,13 @@ public class Main {
         matrixForTranspose.transpose();
         System.out.println("Результат транспонирования матрицы: " + matrixForTranspose);
         System.out.println();
+
+        // Вычисление определителя матрицы
+        //Matrix matrixForDeterminantCalculation = new Matrix(new double[][]{{11.0, -3.0}, {-15.0, -2.0}});
+        //Matrix matrixForDeterminantCalculation = new Matrix(new double[][]{{1.0, -2.0, 3.0}, {4.0, 0.0,6.0}, {-7.0, 8.0, 9.0}});
+        Matrix matrixForDeterminantCalculation = new Matrix(new double[][]{{3.0, -3.0, -5.0, 8.0}, {-3.0, 2.0, 4.0, -6.0}, {2.0, -5.0, -7.0, 5.0}, {-4.0, 3.0, 5.0, -6.0}});
+        System.out.println("Матрица 4х4 для вычисления определителя: " + matrixForDeterminantCalculation);
+        System.out.println("Определитель матрицы 4x4: " + matrixForDeterminantCalculation.getDeterminant());
+        System.out.println();
     }
 }

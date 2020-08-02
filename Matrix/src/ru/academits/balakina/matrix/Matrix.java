@@ -185,6 +185,74 @@ public class Matrix {
     }
 
     // TODO: Вычисление определителя матрицы
+    public double getDeterminant() {
+        if (getRowsCount() != getColumnsCount()) {
+            throw new IllegalArgumentException("Определитель может быть рассчитан только для квадратной матрицы");
+        }
+
+        double determinant = 0;
+
+        if (getRowsCount() == 2) {
+            determinant = rows[0].getComponentByIndex(0) * rows[1].getComponentByIndex(1) -
+                    rows[1].getComponentByIndex(0) * rows[0].getComponentByIndex(1);
+        }
+
+        if (getRowsCount() > 2) {
+            Matrix matrixForCalculation = new Matrix(getRowsCount(), getColumnsCount() + getRowsCount() - 1);
+            //matrixForCalculation.getSum(this);
+
+
+            // Заполнили новую матрицу
+            for (int i = 0; i < getColumnsCount(); i++) {
+                Vector vector = new Vector(getColumnsCount() + getRowsCount() - 1);
+                vector.add(getRowByIndex(i));
+
+                for (int j = 0; j < getColumnsCount() - 1; j++) {
+                    vector.setComponentByIndex(j + getColumnsCount(), rows[i].getComponentByIndex(j));
+                }
+                matrixForCalculation.setRowByIndex(i, vector);
+            }
+
+            // Вычисляем определитель
+            // Сначала прибавление к детерминанту:
+            double sum = 0;
+
+            for (int i = 0; i < getColumnsCount(); i++) {
+                double multiply = 1;
+
+                int k = i;
+                for (int j = 0; j < getRowsCount(); j++) {
+                    multiply *= matrixForCalculation.rows[j].getComponentByIndex(k);
+                    k++;
+                }
+
+                sum += multiply;
+            }
+
+            determinant += sum;
+
+            // Потом вычитаем из детерминанта:
+            double diff = 0;
+
+            for (int i = 0; i < getColumnsCount(); i++) {
+                double multiply = 1;
+
+                int k = i;
+                for (int j = getRowsCount() - 1; j >= 0; j--) {
+                    multiply *= matrixForCalculation.rows[j].getComponentByIndex(k);
+                    k++;
+                }
+
+                diff -= multiply;
+            }
+
+            determinant += diff;
+
+
+        }
+
+        return determinant;
+    }
 
 
     // Статические методы - сложение матриц
