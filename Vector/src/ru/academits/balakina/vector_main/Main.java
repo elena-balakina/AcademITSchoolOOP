@@ -45,9 +45,9 @@ public class Main {
         System.out.printf("Вектор 1 - Вектор 2 = : %s%n", vector1);
 
         // УМНОЖЕНИЕ НА СКАЛЯР
-        int scalar = 2;
+        double scalar = 2.5;
         vector2.multiplyByScalar(scalar);
-        System.out.printf("Вектор 2 * %d = : %s%n", scalar, vector2);
+        System.out.printf("Вектор 2 * %.2f = : %s%n", scalar, vector2);
 
         // РАЗВОРОТ ВЕКТОРА (умножение всех компонент на -1)
         vector2.reverse();

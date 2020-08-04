@@ -9,7 +9,7 @@ public class Vector {
     // a.	Vector(n) – размерность n, все компоненты равны 0
     public Vector(int dimension) {
         if (dimension <= 0) {
-            throw new IllegalArgumentException("Размерность вектора должна быть больше нуля");
+            throw new IllegalArgumentException("Передана некорректная размерность " + dimension + ". Размерность вектора должна быть больше нуля");
         }
 
         components = new double[dimension];
@@ -23,7 +23,7 @@ public class Vector {
     // c.	Vector(double[]) – заполнение вектора значениями из массива
     public Vector(double[] components) {
         if (components.length == 0) {
-            throw new IllegalArgumentException("Размерность вектора должна быть больше нуля");
+            throw new IllegalArgumentException("Передан массив длинной 0. Размерность вектора должна быть больше нуля");
         }
 
         this.components = Arrays.copyOf(components, components.length);
@@ -32,7 +32,7 @@ public class Vector {
     // d.	Vector(n, double[]) – заполнение вектора значениями из массива. Если длина массива меньше n, то считать что в остальных компонентах 0
     public Vector(int dimension, double[] components) {
         if (dimension <= 0) {
-            throw new IllegalArgumentException("Размерность вектора должна быть больше нуля");
+            throw new IllegalArgumentException("Передана некорректная размерность " + dimension + ". Размерность вектора должна быть больше нуля");
         }
 
         this.components = Arrays.copyOf(components, dimension);
@@ -94,7 +94,7 @@ public class Vector {
         return vectorResult;
     }
 
-    public void multiplyByScalar(int scalar) {
+    public void multiplyByScalar(double scalar) {
         for (int i = 0; i < components.length; i++) {
             components[i] *= scalar;
         }
