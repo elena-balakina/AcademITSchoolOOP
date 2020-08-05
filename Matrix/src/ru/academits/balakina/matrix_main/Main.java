@@ -63,7 +63,7 @@ public class Main {
 
         // Проверка умножения на скаляр
         System.out.println("Матрица С: " + matrixC);
-        System.out.println("Матрица С * 5: " + matrixC.multiplyByScalar(5));
+        System.out.println("Матрица С * 5: " + matrixC.multiplyByScalar(5.0));
         System.out.println();
 
         // Получение вектора-столбца по индексу
@@ -80,8 +80,8 @@ public class Main {
         System.out.println("Теперь первая строка матрицы С: " + matrixC.getRowByIndex(0));
         System.out.println();
 
-        System.out.println("Зададим первую строку матрицы С - {10.0, 10.0}");
-        matrixC.setRowByIndex(0, new Vector(new double[]{10.0, 10.0}));
+        System.out.println("Зададим первую строку матрицы С - {10.0, 10.0, 0.0}");
+        matrixC.setRowByIndex(0, new Vector(new double[]{10.0, 10.0, 0.0}));
         System.out.println("Теперь первая строка матрицы С: " + matrixC.getRowByIndex(0));
         System.out.println();
 
