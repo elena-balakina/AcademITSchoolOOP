@@ -3,7 +3,7 @@ package ru.academits.balakina;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class main_task2 {
+public class DeleteEvenNumbersFromList {
     public static void main(String[] args) {
         ArrayList<Integer> numbers = new ArrayList<>(Arrays.asList(1, 2, 2, 3, 0, 5, 6, 7, 8, 9, 2, -2, 10));
 

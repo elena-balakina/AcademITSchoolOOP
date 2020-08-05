@@ -5,21 +5,20 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class main_task1 {
+public class LinesFromFile {
     public static void main(String[] args) {
-        ArrayList<String> rows = new ArrayList<>();
+        ArrayList<String> lines = new ArrayList<>();
 
         try (Scanner scanner = new Scanner(new FileInputStream("input.txt"))) {
             while (scanner.hasNextLine()) {
-                String currentLine = scanner.nextLine();
-                rows.add(currentLine);
+                lines.add(scanner.nextLine());
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Файл для считывания строк не найден");
         }
 
         System.out.println("Считаны строки:");
-        for (String s : rows) {
+        for (String s : lines) {
             System.out.println(s);
         }
     }
