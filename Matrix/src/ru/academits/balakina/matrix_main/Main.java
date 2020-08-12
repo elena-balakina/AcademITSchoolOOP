@@ -19,14 +19,14 @@ public class Main {
         Matrix matrixA = new Matrix(3, 3);
 
         System.out.println(matrixA);
-        System.out.printf("Размеры матрицы A: %s%n", matrixA.getMatrixSizes());
+        System.out.printf("Размеры матрицы A: %s x %s%n", matrixA.getRowsCount(), matrixA.getColumnsCount());
         System.out.println();
 
         // Проверяем конструктор b.	Matrix(Matrix) – конструктор копирования
         Matrix matrixB = new Matrix(matrixA);
 
         System.out.println(matrixB);
-        System.out.printf("Размеры матрицы B: %s%n", matrixB.getMatrixSizes());
+        System.out.printf("Размеры матрицы B: %s x %s%n", matrixB.getRowsCount(), matrixB.getColumnsCount());
         System.out.println();
 
         // Проверяем конструктор c.	Matrix(double[][]) – из двумерного массива
@@ -34,7 +34,7 @@ public class Main {
         Matrix matrixC = new Matrix(array);
 
         System.out.println(matrixC);
-        System.out.printf("Размеры матрицы C: %s%n", matrixC.getMatrixSizes());
+        System.out.printf("Размеры матрицы C: %s x %s%n", matrixC.getRowsCount(), matrixC.getColumnsCount());
         System.out.println();
 
 
@@ -47,17 +47,17 @@ public class Main {
         Matrix matrixD = new Matrix(vectorsArray);
 
         System.out.println(matrixD);
-        System.out.printf("Размеры матрицы D: %s%n", matrixD.getMatrixSizes());
+        System.out.printf("Размеры матрицы D: %s x %s%n", matrixD.getRowsCount(), matrixD.getColumnsCount());
         System.out.println();
 
         // Проверка сложения матриц
-        System.out.printf("Матрица А + Матрица В: %s%n", matrixA.getSum(matrixB));
-        System.out.printf("Матрица А + Матрица C: %s%n", matrixA.getSum(matrixC));
-        System.out.printf("Матрица C + Матрица D: %s%n", matrixC.getSum(matrixD));
+        System.out.printf("Матрица А + Матрица В: %s%n", matrixA.add(matrixB));
+        System.out.printf("Матрица А + Матрица C: %s%n", matrixA.add(matrixC));
+        System.out.printf("Матрица C + Матрица D: %s%n", matrixC.add(matrixD));
 
         // Проверка вычитания матриц
-        System.out.printf("Матрица C - Матрица D: %s%n", matrixC.getDifference(matrixD));
-        System.out.printf("Матрица C - {-10, -20, -30}: %s%n", matrixC.getDifference(
+        System.out.printf("Матрица C - Матрица D: %s%n", matrixC.subtract(matrixD));
+        System.out.printf("Матрица C - {-10, -20, -30}: %s%n", matrixC.subtract(
                 new Matrix(new double[][]{{-10.0, -20.0, -30.0}, {-10.0, -20.0, -30.0}, {-10.0, -20.0, -30.0}})));
         System.out.println();
 
