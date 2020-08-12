@@ -1,5 +1,4 @@
-1 line
-2 line
-3 line
-
-4 line
+id,brand,model
+010656,Samsung,Galaxy S6
+010657,Samsung,Galaxy S9
+010658,Samsung,Galaxy Note 5
