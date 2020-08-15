@@ -7,7 +7,7 @@ public class DeleteEvenNumbersFromList {
     public static void main(String[] args) {
         ArrayList<Integer> numbers = new ArrayList<>(Arrays.asList(1, 2, 2, 3, 0, 5, 6, 7, 8, 9, 2, -2, 10));
 
-        System.out.println("Исходный массив: " + numbers);
+        System.out.println("Исходный список: " + numbers);
 
         for (int i = 0; i < numbers.size(); i++) {
             int currentNumber = numbers.get(i);
@@ -18,6 +18,6 @@ public class DeleteEvenNumbersFromList {
             }
         }
 
-        System.out.println("Массив после удаления четных чисел: " + numbers);
+        System.out.println("Список после удаления четных чисел: " + numbers);
     }
 }
