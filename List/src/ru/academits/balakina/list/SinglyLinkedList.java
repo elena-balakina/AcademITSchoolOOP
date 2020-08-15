@@ -15,118 +15,87 @@ public class SinglyLinkedList<E> {
     // получение значение первого элемента
     public E getFirstItemData() {
         if (count == 0) {
-            return null;
+            throw new NullPointerException("Список пуст, невозможно считать данные первого элемента");
         }
 
         return head.getData();
     }
 
     // получение Item по указанному индексу
-    public ListItem<E> getItemByIndex(int index) {
-        ListItem<E> result = null;
+    private ListItem<E> getItemByIndex(int index) {
+        if (index < 0 || index >= getCount()) {
+            throw new NullPointerException("Передано значение " + index + ". Индекс выходит за границы списка");
+        }
+
         int i = 0;
 
         for (ListItem<E> p = head; p != null; p = p.getNext()) {
             if (index == i) {
-                result = p;
+                return p;
             }
+
             i++;
         }
 
-        return result;
+        return null;
     }
 
     // получение значения по указанному индексу
     public E getDataByIndex(int index) {
-        if (index < 0) {
-            throw new IllegalArgumentException("Передано значение " + index + ". Индекс не может быть отрицатальной величиной");
-        }
-
-        if (index >= getCount()) {
+        if (index < 0 || index >= getCount()) {
             throw new IndexOutOfBoundsException("Передано значение " + index + ". Индекс выходит за границы списка");
         }
 
-        E result = null;
-        int i = 0;
-
-        for (ListItem<E> p = head; p != null; p = p.getNext()) {
-            if (index == i) {
-                result = p.getData();
-            }
-            i++;
-        }
-
-        return result;
+        return getItemByIndex(index).getData();
     }
 
     // изменение значения по указанному индексу
     public E setDataByIndex(int index, E data) {
-        if (index < 0) {
-            throw new IllegalArgumentException("Передано значение " + index + ". Индекс не может быть отрицатальной величиной");
-        }
-
-        if (index >= getCount()) {
+        if (index < 0 || index >= getCount()) {
             throw new IndexOutOfBoundsException("Передано значение " + index + ". Индекс выходит за границы списка");
         }
 
-        E result = null;
-        int i = 0;
+        E result = getItemByIndex(index).getData();
+        getItemByIndex(index).setData(data);
 
-        for (ListItem<E> p = head; p != null; p = p.getNext()) {
-            if (index == i) {
-                result = p.getData();
-                p.setData(data);
-            }
-            i++;
-        }
         return result;
     }
 
     // удаление элемента по индексу
     public E deleteItemByIndex(int index) {
-        if (index < 0) {
-            throw new IllegalArgumentException("Передано значение " + index + ". Индекс не может быть отрицатальной величиной");
-        }
-
-        if (index >= getCount()) {
+        if (index < 0 || index >= getCount()) {
             throw new IndexOutOfBoundsException("Передано значение " + index + ". Индекс выходит за границы списка");
         }
 
-        E result = null;
-        int i = 0;
+        E result;
+        ListItem<E> deletedItem = getItemByIndex(index);
 
-        for (ListItem<E> p = head, prev = null; p != null; prev = p, p = p.getNext()) {
-            if (index == 0) {
-                result = head.getData();
-                head = p.getNext();
-                count--;
-                return result;
-            } else {
-                if (index == i) {
-                    result = p.getData();
-                    prev.setNext(p.getNext());
-                    count--;
-                }
-                i++;
-            }
+        if (index == 0) {
+            result = head.getData();
+            head = deletedItem.getNext();
+            count--;
+            return result;
         }
+
+        result = deletedItem.getData();
+        ListItem<E> prevItem = getItemByIndex(index - 1);
+
+        prevItem.setNext(deletedItem.getNext());
+        count--;
 
         return result;
     }
 
     // вставка элемента в начало
     public void addToBeginning(E data) {
-        ListItem<E> newItem = new ListItem<>(data);
-
-        newItem.setNext(head);
-        head = newItem;
+        head = new ListItem<>(data, head);
         count++;
     }
 
     // вставка элемента по индексу
     public void addItemByIndex(int index, E data) {
         if (index < 0) {
-            throw new IllegalArgumentException("Передано значение " + index + ". Индекс не может быть отрицатальной величиной");
+            throw new IndexOutOfBoundsException("Передано значение " + index + ". Индекс выходит за границы списка");
         }
 
         if (index > getCount()) {
@@ -139,31 +108,19 @@ public class SinglyLinkedList<E> {
         }
 
         ListItem<E> newItem = new ListItem<>(data);
+        ListItem<E> prevItem = getItemByIndex(index - 1);
+        ListItem<E> currentItem = prevItem.getNext();
 
-        if (index == getCount()) {
-            getItemByIndex(getCount() - 1).setNext(newItem);
-            count++;
-            return;
-        }
-
-        int i = 0;
-
-        for (ListItem<E> p = head, prev = null; p != null; prev = p, p = p.getNext()) {
-            if (index == i) {
-                prev.setNext(newItem);
-                newItem.setNext(p);
-                count++;
-            }
-            i++;
-        }
+        prevItem.setNext(newItem);
+        newItem.setNext(currentItem);
+        count++;
     }
 
     // удаление узла по значению, пусть выдает true, если элемент был удален
     public boolean removeByData(E data) {
-        for (ListItem<E> p = head, prev = null; p != null; prev = p, p = p.getNext()) {
-            if (p.getData() == data) {
-                prev.setNext(p.getNext());
-                count--;
+        for (int i = 0; i < count; i++) {
+            if (getItemByIndex(i).getData() == data) {
+                deleteItemByIndex(i);
                 return true;
             }
         }
@@ -173,6 +130,10 @@ public class SinglyLinkedList<E> {
 
     // удаление первого элемента, пусть выдает значение элемента
     public E removeFromBeginning() {
+        if (count == 0) {
+            throw new NullPointerException("Список пуст, невозможно удалить первый элемент");
+        }
+
         E result = head.getData();
 
         head = head.getNext();
@@ -204,17 +165,32 @@ public class SinglyLinkedList<E> {
             return singlyLinkedListCopy;
         }
 
-        for (int i = 0; i < getCount(); i++) {
-            singlyLinkedListCopy.addToBeginning(getItemByIndex(i).getData());
+        ListItem<E> currentItem = new ListItem<>(head.getData());
+        ListItem<E> nextItem = head.getNext();
+        singlyLinkedListCopy.head = currentItem;
+
+        for (int i = 1; i < getCount(); i++) {
+            currentItem.setNext(new ListItem<>(nextItem.getData()));
+            nextItem = nextItem.getNext();
+            currentItem = currentItem.getNext();
         }
 
-        singlyLinkedListCopy.reverse();
         return singlyLinkedListCopy;
     }
 
-    public void print() {
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{ ");
+
         for (ListItem<E> p = head; p != null; p = p.getNext()) {
-            System.out.println(p.getData());
+            stringBuilder.append(p.getData());
+            stringBuilder.append(", ");
         }
+
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+        stringBuilder.append(" }");
+
+        return stringBuilder.toString();
     }
 }
