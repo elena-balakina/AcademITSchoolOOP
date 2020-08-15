@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class DeleteEvenNumbersFromList {
     public static void main(String[] args) {
-        ArrayList<Integer> numbers = new ArrayList<>(Arrays.asList(1, 2, 2, 3, 0, 5, 6, 7, 8, 9, 2, -2, 10));
+        ArrayList<Integer> numbers = new ArrayList<>(Arrays.asList(1, 4, 2, 3, 0, 5, 6, 7, 8, 9, 2, -2, 10));
 
         System.out.println("Исходный список: " + numbers);
 
