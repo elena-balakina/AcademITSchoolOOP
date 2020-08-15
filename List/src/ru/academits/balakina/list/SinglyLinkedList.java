@@ -24,20 +24,21 @@ public class SinglyLinkedList<E> {
     // получение Item по указанному индексу
     private ListItem<E> getItemByIndex(int index) {
         if (index < 0 || index >= getCount()) {
-            throw new NullPointerException("Передано значение " + index + ". Индекс выходит за границы списка");
+            throw new IndexOutOfBoundsException("Передано значение " + index + ". Индекс выходит за границы списка");
         }
 
         int i = 0;
+        ListItem<E> result = new ListItem<>(null);
 
         for (ListItem<E> p = head; p != null; p = p.getNext()) {
             if (index == i) {
-                return p;
+                result = p;
             }
 
             i++;
         }
 
-        return null;
+        return result;
     }
 
     // получение значения по указанному индексу
