@@ -109,7 +109,7 @@ public class Main {
         Matrix matrixForMultiplication2 = new Matrix(new double[][]{{1.0, 0.0}, {0.0, 1.0}, {1.0, 1.0}});
         System.out.println("Матрица 1 для умножения: " + matrixForMultiplication1);
         System.out.println("Матрица 2 для умножения: " + matrixForMultiplication2);
-        System.out.println("Результат умножения матриц: " + getMultiplication(matrixForMultiplication1, matrixForMultiplication2));
+        System.out.println("Результат умножения матриц: " + getProduct(matrixForMultiplication1, matrixForMultiplication2));
         System.out.println();
 
         // Транспонирование матрицы

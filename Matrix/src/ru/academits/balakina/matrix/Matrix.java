@@ -113,8 +113,8 @@ public class Matrix {
 
     // Умножение на скаляр
     public Matrix multiplyByScalar(double scalar) {
-        for (int i = 0; i < getRowsCount(); i++) {
-            rows[i].multiplyByScalar(scalar);
+        for (Vector row : rows) {
+            row.multiplyByScalar(scalar);
         }
 
         return this;
@@ -127,7 +127,7 @@ public class Matrix {
         }
 
         if (index < 0) {
-            throw new IllegalArgumentException("Переданный индекс = : " + index + ". Индекс должен быть больше нуля");
+            throw new IndexOutOfBoundsException("Переданный индекс = : " + index + ". Индекс должен быть больше нуля");
         }
 
         Vector column = new Vector(getRowsCount());
@@ -146,7 +146,7 @@ public class Matrix {
         }
 
         if (index < 0) {
-            throw new IllegalArgumentException("Переданный индекс = : " + index + ". Индекс должен быть больше нуля");
+            throw new IndexOutOfBoundsException("Переданный индекс = : " + index + ". Индекс должен быть больше нуля");
         }
 
         return new Vector(rows[index]);
@@ -160,7 +160,7 @@ public class Matrix {
         }
 
         if (index < 0) {
-            throw new IllegalArgumentException("Переданный индекс = : " + index + ". Индекс должен быть больше нуля");
+            throw new IndexOutOfBoundsException("Переданный индекс = : " + index + ". Индекс должен быть больше нуля");
         }
 
         // Проверка размерности вектора
@@ -200,7 +200,7 @@ public class Matrix {
     // Вычисление определителя матрицы
     public double getDeterminant() {
         if (getRowsCount() != getColumnsCount()) {
-            throw new IllegalArgumentException("Определитель может быть рассчитан только для квадратной матрицы. Размеры текущей матрицы: " + getRowsCount() + " x " + getColumnsCount());
+            throw new UnsupportedOperationException("Определитель может быть рассчитан только для квадратной матрицы. Размеры текущей матрицы: " + getRowsCount() + " x " + getColumnsCount());
         }
 
         if (getRowsCount() == 1) {
@@ -282,7 +282,7 @@ public class Matrix {
     }
 
     // Статические методы - умножение матриц
-    public static Matrix getMultiplication(Matrix matrix1, Matrix matrix2) {
+    public static Matrix getProduct(Matrix matrix1, Matrix matrix2) {
         if (matrix1.getColumnsCount() != matrix2.getRowsCount()) {
             throw new IllegalArgumentException("При перемножении матриц число столбцов первой матрицы должно быть равно числу строк второй: " +
                     matrix1.getColumnsCount() + " не равно " + matrix2.getRowsCount());
