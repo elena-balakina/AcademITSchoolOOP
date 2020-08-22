@@ -4,56 +4,105 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CSV {
+    public static void main(String[] args) {
+        String inputFilePath = args[0];
+        String outputFilePath = args[1];
 
-    public CSV() {
-    }
+        try (Scanner scanner = new Scanner(new FileInputStream(inputFilePath));
+             PrintWriter writer = new PrintWriter(new FileOutputStream(outputFilePath))) {
+            // открывающие теги
+            writer.println("<!DOCTYPE html>");
+            writer.println("<html>");
+            writer.println("<head>");
+            writer.println("<title> Table from CSV </title>");
+            writer.println("<meta name = \"Table from CSV\" content = \"HTML,CSS,PHP,JavaScript charset=\"UTF-8\">");
+            writer.println("</head>");
+            writer.println("<body>");
+            writer.println("<table>");
 
-    public ArrayList<String> readFromFile(String fileName) {
-        ArrayList<String> lines = new ArrayList<>();
+            // вспомогательные переменные
+            boolean insideQuotes = false;
+            boolean newLine = true;
+            boolean trEnd = false;
 
-        try (Scanner scanner = new Scanner(new FileInputStream(fileName))) {
+            // построчное считывание файла
             while (scanner.hasNextLine()) {
-                lines.add(scanner.nextLine());
+                String currentLine = scanner.nextLine();
+
+                if (newLine) {
+                    if (currentLine.length() > 0) {
+                        writer.print("<tr> <td>");
+                    } else {
+                        writer.println();
+                        continue;
+                    }
+                }
+
+                // считываем строку посимвольно
+                for (int i = 0; i < currentLine.length(); i++) {
+                    char currentChar = currentLine.charAt(i);
+                    int lastIndex = currentLine.length() - 1;
+
+                    if (i == lastIndex) {
+                        trEnd = true;
+                    }
+
+                    if (currentChar == '"' && !insideQuotes) {
+                        insideQuotes = true;
+                        continue;
+                    }
+
+                    if (insideQuotes && !trEnd && currentChar == '"' && currentLine.charAt(i + 1) == '"') {
+                        writer.print(currentChar);
+                        i++;
+                        continue;
+                    }
+
+                    if (insideQuotes && trEnd && currentChar == '"') {
+                        insideQuotes = false;
+                        continue;
+                    }
+
+                    if (insideQuotes && !trEnd && currentChar == '"' && currentLine.charAt(i + 1) == ',') {
+                        insideQuotes = false;
+                        newLine = true;
+                        continue;
+                    }
+
+                    if (insideQuotes && trEnd) {
+                        writer.print("<br/>");
+                        newLine = false;
+                        continue;
+                    }
+
+                    if (currentLine.charAt(i) == ',') {
+                        if (insideQuotes) {
+                            writer.print(currentChar);
+                        } else {
+                            writer.print("</td> <td>");
+                        }
+                    } else {
+                        writer.print(currentChar);
+                    }
+                }
+
+                if (newLine) {
+                    writer.println("</td> </tr>");
+                }
+
+                trEnd = false;
             }
+
+            // закрывающие теги
+            writer.println("</table>");
+            writer.println("</body>");
+            writer.println("</html>");
+
         } catch (FileNotFoundException e) {
             System.out.println("Файл для считывания строк не найден");
         }
-
-        return lines;
-    }
-
-    public void writeHtmlToFile(ArrayList<String> lines, String fileName) {
-        try (PrintWriter writer = new PrintWriter(new FileOutputStream(fileName))) {
-            for (String line : lines) {
-                writer.println(line);
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Файл для записи не создан");
-        }
-    }
-
-    public ArrayList<String> convertLineFromCSVToHtml(ArrayList<String> linesCSV) {
-        ArrayList<String> lines = new ArrayList<>();
-
-        lines.add("<table>");
-
-        for (String s : linesCSV) {
-            lines.add("<tr>");
-
-            String[] items = s.split(",");
-            for (String item : items) {
-                lines.add("<td>" + item + "</td>");
-            }
-
-            lines.add("</tr>");
-        }
-
-        lines.add("</table>");
-
-        return lines;
     }
 }
