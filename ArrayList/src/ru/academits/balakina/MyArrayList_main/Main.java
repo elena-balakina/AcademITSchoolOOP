@@ -49,25 +49,12 @@ public class Main {
         System.out.println("Длина списка = " + arrayList.size());
         System.out.println();
 
-        // очистка списка
-        /*arrayList.clear();
-        System.out.println("Список: ");
-        System.out.println(arrayList);
-        System.out.println("Длина списка = " + arrayList.size());
-        System.out.println();*/
-
         // contains
         System.out.println("Список содержит \"three\"? - " + arrayList.contains("three"));
 
         // indexOf
         System.out.println("Индекс \"three\" = " + arrayList.indexOf("three"));
         System.out.println("Индекс последнего вхождения \"three\" = " + arrayList.lastIndexOf("three"));
-        System.out.println();
-
-        // sublist
-        System.out.println("Sublist по индексам от 1 до 2: ");
-        System.out.println(arrayList.subList(1, 2));
-        System.out.println("Длина sublist'а = " + arrayList.subList(1, 2).size());
         System.out.println();
 
         // addAll в конец
@@ -80,21 +67,20 @@ public class Main {
         System.out.println("Список: ");
         System.out.println(arrayList);
         System.out.println("Длина списка = " + arrayList.size());
-        System.out.println("/////////////////////");
-
+        System.out.println();
 
         // add по индексу
-        arrayList.add(0, "one");
-        arrayList.set(1, "two");
+        arrayList.add(1, "one");
+        arrayList.add(2, "two");
+
 
         // remove по индексу
-        arrayList.remove(2);
+        arrayList.remove(3);
 
         System.out.println("Список: ");
         System.out.println(arrayList);
         System.out.println("Длина списка = " + arrayList.size());
         System.out.println();
-
 
         // addAll в конец списка
         System.out.println("Добавим в конец списка {eight, nine, ten}");
@@ -111,10 +97,10 @@ public class Main {
         System.out.println();
 
         // addAll по индексу
-        System.out.println("Добавим {six1, six2} по индексу 6 (после six)");
+        System.out.println("Добавим {six, six} по индексу 6 (после six)");
         MyArrayList<String> arrayToAdd3 = new MyArrayList<>(2);
-        arrayToAdd3.add("six1");
-        arrayToAdd3.add("six2");
+        arrayToAdd3.add("six");
+        arrayToAdd3.add("six");
 
         arrayList.addAll(6, arrayToAdd3);
 
@@ -124,30 +110,37 @@ public class Main {
         System.out.println();
 
         // containsAll
-        System.out.println("Список содержит {six1, six2} ??? --> " + arrayList.containsAll(arrayToAdd3));
+        MyArrayList<String> arrayToAdd4 = new MyArrayList<>(1);
+        arrayToAdd4.add("six");
+        System.out.println("Список содержит {six} ??? --> " + arrayList.containsAll(arrayToAdd4));
         System.out.println();
 
         // removeAll
-        System.out.println("Удалим {six1, six2}");
-
-        arrayList.removeAll(arrayToAdd3);
+        System.out.println("Удалим {six} " + arrayList.removeAll(arrayToAdd4));
 
         System.out.println("Список: ");
         System.out.println(arrayList);
         System.out.println("Длина списка = " + arrayList.size());
-        System.out.println("Список содержит {six1, six2} ??? --> " + arrayList.containsAll(arrayToAdd3));
+        System.out.println("Список содержит {six} ??? --> " + arrayList.containsAll(arrayToAdd4));
         System.out.println();
 
         // retainAll
-        System.out.println("Удалим все кроме {eight, nine, ten}");
-
-        arrayList.retainAll(arrayToAdd2);
+        System.out.println("Удалим все кроме {eight, nine, ten} " + arrayList.retainAll(arrayToAdd2));
 
         System.out.println("Список: ");
         System.out.println(arrayList);
         System.out.println("Длина списка = " + arrayList.size());
         System.out.println();
 
+        // indexOf
+        System.out.println("Индекс элемента {eight} = " + arrayList.indexOf("eight"));
+        System.out.println("Индекс последнего элемента {ten} = " + arrayList.lastIndexOf("ten"));
 
+        // очистка списка
+        arrayList.clear();
+        System.out.println("Список после очистки: ");
+        System.out.println(arrayList);
+        System.out.println("Длина списка = " + arrayList.size());
+        System.out.println();
     }
 }
