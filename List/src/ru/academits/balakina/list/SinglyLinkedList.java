@@ -1,6 +1,7 @@
 package ru.academits.balakina.list;
 
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class SinglyLinkedList<E> {
     private ListItem<E> head; // указатель на первый элемент списка
@@ -25,8 +26,8 @@ public class SinglyLinkedList<E> {
 
     // получение Item по указанному индексу
     private ListItem<E> getItemByIndex(int index) {
-        if (index < 0 || index >= getCount()) {
-            throw new IndexOutOfBoundsException("Передано значение " + index + ". Индекс выходит за границы списка");
+        if (index < 0 || index >= count) {
+            throw new IndexOutOfBoundsException("Передано значение " + index + ". Индекс выходит за границы списка: [0, " + (count - 1) + "]");
         }
 
         int i = 0;
@@ -83,11 +84,11 @@ public class SinglyLinkedList<E> {
     // вставка элемента по индексу
     public void addItemByIndex(int index, E data) {
         if (index < 0) {
-            throw new IndexOutOfBoundsException("Передано значение " + index + ". Индекс выходит за границы списка");
+            throw new IndexOutOfBoundsException("Передано значение " + index + ". Индекс выходит за границы списка: [0, " + (count - 1) + "]");
         }
 
         if (index > count) {
-            throw new IndexOutOfBoundsException("Передано значение " + index + ". Индекс превышает значение длины списка + 1");
+            throw new IndexOutOfBoundsException("Передано значение " + index + ". Индекс превышает значение длины списка + 1 = " + (count + 1));
         }
 
         if (index == 0) {
@@ -106,7 +107,16 @@ public class SinglyLinkedList<E> {
 
     // удаление узла по значению, пусть выдает true, если элемент был удален
     public boolean removeByData(E data) {
-        if (head.getData().equals(data)) {
+        if (count == 0) {
+            throw new IllegalArgumentException("Список пуст, невозможно удалить элемент по значению");
+        }
+
+//        if (head.getData().equals(data)) {
+//            removeFromBeginning();
+//            return true;
+//        }
+
+        if (Objects.equals(head.getData(), data)) {
             removeFromBeginning();
             return true;
         }
@@ -115,7 +125,7 @@ public class SinglyLinkedList<E> {
         ListItem<E> currentItem = head.getNext();
 
         while (currentItem != null) {
-            if (currentItem.getData().equals(data)) {
+            if (Objects.equals(currentItem.getData(), data)) {
                 prevItem.setNext(currentItem.getNext());
                 count--;
                 return true;
@@ -165,14 +175,14 @@ public class SinglyLinkedList<E> {
             return singlyLinkedListCopy;
         }
 
-        ListItem<E> currentItem = new ListItem<>(head.getData());
+        ListItem<E> currentItemCopy = new ListItem<>(head.getData());
         ListItem<E> nextItem = head.getNext();
-        singlyLinkedListCopy.head = currentItem;
+        singlyLinkedListCopy.head = currentItemCopy;
 
         for (int i = 1; i < count; i++) {
-            currentItem.setNext(new ListItem<>(nextItem.getData()));
+            currentItemCopy.setNext(new ListItem<>(nextItem.getData()));
             nextItem = nextItem.getNext();
-            currentItem = currentItem.getNext();
+            currentItemCopy = currentItemCopy.getNext();
         }
 
         return singlyLinkedListCopy;
