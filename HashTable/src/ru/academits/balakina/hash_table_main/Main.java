@@ -1,6 +1,6 @@
-package ru.academits.balakina.hashTable_main;
+package ru.academits.balakina.hash_table_main;
 
-import ru.academits.balakina.hashTable.HashTable;
+import ru.academits.balakina.hash_table.HashTable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,9 +43,10 @@ public class Main {
         arrayToCheck.add(5);
         arrayToCheck.add(10);
         System.out.println("Хэш-таблица содержит [5, 10]? -  " + hashTable.containsAll(arrayToCheck));
-
-        arrayToCheck.add(20);
+        System.out.println("Добавим в массив 20: " + arrayToCheck.add(20));
         System.out.println("Хэш-таблица содержит [5, 10, 20]? -  " + hashTable.containsAll(arrayToCheck));
+        System.out.println();
+
 
         System.out.println("Добавим в хэш-таблицу [5, 10, 20]: " + hashTable.addAll(arrayToCheck));
         System.out.println(hashTable);
@@ -62,18 +63,21 @@ public class Main {
         System.out.println("size = " + hashTable.size());
         System.out.println();
 
+        System.out.println("Добавим 2 в хэш-таблицу: " + hashTable.add(2));
+        System.out.println(hashTable);
+        System.out.println("size = " + hashTable.size());
+        System.out.println();
+
         // retainAll
         System.out.println("Оставим в хэш-таблице только [2, 3]: " + hashTable.retainAll(new ArrayList<>(Arrays.asList(2, 3))));
         System.out.println(hashTable);
         System.out.println("size = " + hashTable.size());
         System.out.println();
 
-
-        /*System.out.println("Очистим хэш-таблицу");
+        System.out.println("Очистим хэш-таблицу");
         hashTable.clear();
         System.out.println(hashTable);
         System.out.println("size = " + hashTable.size());
-        System.out.println();*/
-
+        System.out.println();
     }
 }
