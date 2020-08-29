@@ -1,4 +1,4 @@
-package ru.academits.balakina.MyArrayList;
+package ru.academits.balakina.my_array_list;
 
 import java.util.*;
 
@@ -23,7 +23,7 @@ public class MyArrayList<E> implements List<E> {
     }
 
     private void increaseCapacity() {
-        items = Arrays.copyOf(items, items.length * 2);
+        items = Arrays.copyOf(items, (items.length + 1) * 2);
     }
 
     public void ensureCapacity(int neededCapacity) {
@@ -35,7 +35,7 @@ public class MyArrayList<E> implements List<E> {
     @Override
     public E set(int index, E element) {
         if (index >= length || index < 0) {
-            throw new IndexOutOfBoundsException("Передано некорректное значение индекса: " + index + ". Индекс должен быть в диапазоне от 0 до " + length + " включительно.");
+            throw new IndexOutOfBoundsException("Передан индекс: " + index + ". Индекс должен быть в диапазоне от 0 до " + (length - 1));
         }
 
         E temp = items[index];
@@ -47,7 +47,7 @@ public class MyArrayList<E> implements List<E> {
     @Override
     public E get(int index) {
         if (index >= length || index < 0) {
-            throw new IndexOutOfBoundsException("Передано некорректное значение индекса: " + index + ". Индекс должен быть в диапазоне от 0 до " + length + " включительно.");
+            throw new IndexOutOfBoundsException("Передан индекс: " + index + ". Индекс должен быть в диапазоне от 0 до " + (length - 1));
         }
 
         return items[index];
@@ -75,7 +75,7 @@ public class MyArrayList<E> implements List<E> {
 
     private class MyListIterator implements Iterator<E> {
         private int currentIndex = -1;
-        private int currentModCount = modCount;
+        private final int currentModCount = modCount;
 
         @Override
         public boolean hasNext() {
@@ -89,7 +89,7 @@ public class MyArrayList<E> implements List<E> {
             }
 
             if (currentModCount != modCount) {
-                throw new ConcurrentModificationException("В коллекции изменилось количество элементов за время обхода");
+                throw new ConcurrentModificationException("Коллекция изменилась за время обхода");
             }
 
             currentIndex++;
@@ -137,6 +137,7 @@ public class MyArrayList<E> implements List<E> {
     @Override
     public boolean remove(Object o) {
         int index = indexOf(o);
+
         if (index >= 0) {
             remove(index);
             return true;
@@ -162,8 +163,6 @@ public class MyArrayList<E> implements List<E> {
         if (c.isEmpty()) {
             return false;
         }
-
-        modCount++;
 
         return addAll(length, c);
     }
@@ -207,18 +206,13 @@ public class MyArrayList<E> implements List<E> {
             }
         }
 
-        if (currentSize != size()) {
-            modCount++;
-            return true;
-        }
-
-        return false;
+        return currentSize != size();
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
         if (c.isEmpty()) {
-            return true;
+            return false;
         }
 
         int currentSize = size();
@@ -230,12 +224,7 @@ public class MyArrayList<E> implements List<E> {
             }
         }
 
-        if (currentSize != size()) {
-            modCount++;
-            return true;
-        }
-
-        return false;
+        return currentSize != size();
     }
 
     @Override
@@ -274,7 +263,7 @@ public class MyArrayList<E> implements List<E> {
     public E remove(int index) {
         // Проверка индекса
         if (index >= length || index < 0) {
-            throw new IndexOutOfBoundsException("Передано некорректное значение индекса: " + index + ". Индекс должен быть в диапазоне от 0 до " + length + " включительно.");
+            throw new IndexOutOfBoundsException("Передан индекс: " + index + ". Индекс должен быть в диапазоне от 0 до " + (length - 1));
         }
 
         if (index < length - 1) {
@@ -292,7 +281,7 @@ public class MyArrayList<E> implements List<E> {
     @Override
     public int indexOf(Object o) {
         for (int i = 0; i < length; i++) {
-            if (items[i].equals(o)) {
+            if (Objects.equals(items[i], o)) {
                 return i;
             }
         }
@@ -303,7 +292,7 @@ public class MyArrayList<E> implements List<E> {
     @Override
     public int lastIndexOf(Object o) {
         for (int i = length - 1; i >= 0; i--) {
-            if (items[i].equals(o)) {
+            if (Objects.equals(items[i], o)) {
                 return i;
             }
         }

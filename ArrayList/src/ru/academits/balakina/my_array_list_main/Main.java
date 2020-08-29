@@ -1,6 +1,6 @@
-package ru.academits.balakina.MyArrayList_main;
+package ru.academits.balakina.my_array_list_main;
 
-import ru.academits.balakina.MyArrayList.MyArrayList;
+import ru.academits.balakina.my_array_list.MyArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -130,11 +130,11 @@ public class Main {
         System.out.println("Список: ");
         System.out.println(arrayList);
         System.out.println("Длина списка = " + arrayList.size());
-        System.out.println();
 
         // indexOf
         System.out.println("Индекс элемента {eight} = " + arrayList.indexOf("eight"));
         System.out.println("Индекс последнего элемента {ten} = " + arrayList.lastIndexOf("ten"));
+        System.out.println();
 
         // очистка списка
         arrayList.clear();
