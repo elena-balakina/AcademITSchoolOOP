@@ -88,7 +88,7 @@ public class SinglyLinkedList<E> {
         }
 
         if (index > count) {
-            throw new IndexOutOfBoundsException("Передано значение " + index + ". Индекс превышает значение длины списка + 1 = " + (count + 1));
+            throw new IndexOutOfBoundsException("Передано значение " + index + ". Индекс превышает значение длины списка  = " + count);
         }
 
         if (index == 0) {
@@ -107,15 +107,6 @@ public class SinglyLinkedList<E> {
 
     // удаление узла по значению, пусть выдает true, если элемент был удален
     public boolean removeByData(E data) {
-        if (count == 0) {
-            throw new IllegalArgumentException("Список пуст, невозможно удалить элемент по значению");
-        }
-
-//        if (head.getData().equals(data)) {
-//            removeFromBeginning();
-//            return true;
-//        }
-
         if (Objects.equals(head.getData(), data)) {
             removeFromBeginning();
             return true;
