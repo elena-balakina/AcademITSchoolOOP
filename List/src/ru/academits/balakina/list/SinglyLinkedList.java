@@ -107,6 +107,10 @@ public class SinglyLinkedList<E> {
 
     // удаление узла по значению, пусть выдает true, если элемент был удален
     public boolean removeByData(E data) {
+        if (count == 0) {
+            return false;
+        }
+
         if (Objects.equals(head.getData(), data)) {
             removeFromBeginning();
             return true;
@@ -189,7 +193,10 @@ public class SinglyLinkedList<E> {
             stringBuilder.append(", ");
         }
 
-        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+        if (count >= 2) {
+            stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+        }
+
         stringBuilder.append(" }");
 
         return stringBuilder.toString();

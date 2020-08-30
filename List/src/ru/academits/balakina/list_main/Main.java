@@ -6,6 +6,12 @@ public class Main {
     public static void main(String[] args) {
         SinglyLinkedList<String> singlyLinkedList = new SinglyLinkedList<>();
 
+        singlyLinkedList.removeByData("data");
+
+        System.out.println("Пустой список: " + singlyLinkedList);
+        System.out.println();
+
+
         singlyLinkedList.addToBeginning("third");
         singlyLinkedList.addToBeginning("second");
         singlyLinkedList.addToBeginning("first");
