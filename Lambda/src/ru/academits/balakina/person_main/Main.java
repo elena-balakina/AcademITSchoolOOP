@@ -36,11 +36,11 @@ public class Main {
                 .map(Person::getName)
                 .distinct()
                 .sorted()
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(", ", "Имена: ", "."));
 
-        System.out.println("Б. Список уникальных имен в формате строки: " + uniqueNamesString);
+        System.out.println("Б. Список уникальных имен в формате строки: \"Имена: Иван, Сергей, Петр.\"");
+        System.out.println(uniqueNamesString);
         System.out.println();
-
 
         // В) получить список людей младше 18, посчитать для них средний возраст
         List<Person> youngPeople = people.stream()
