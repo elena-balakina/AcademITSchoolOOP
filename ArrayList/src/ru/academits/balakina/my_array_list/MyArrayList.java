@@ -32,25 +32,27 @@ public class MyArrayList<E> implements List<E> {
         }
     }
 
+    private void checkIndex(int index, int maxPossibleIndex) {
+        if (index > maxPossibleIndex || index < 0) {
+            throw new IndexOutOfBoundsException("Передан индекс: " + index + ". Индекс должен быть в диапазоне от 0 до " + maxPossibleIndex);
+        }
+    }
+
+    @Override
+    public E get(int index) {
+        checkIndex(index, length - 1);
+
+        return items[index];
+    }
+
     @Override
     public E set(int index, E element) {
-        if (index >= length || index < 0) {
-            throw new IndexOutOfBoundsException("Передан индекс: " + index + ". Индекс должен быть в диапазоне от 0 до " + (length - 1));
-        }
+        checkIndex(index, length - 1);
 
         E temp = items[index];
         items[index] = element;
 
         return temp;
-    }
-
-    @Override
-    public E get(int index) {
-        if (index >= length || index < 0) {
-            throw new IndexOutOfBoundsException("Передан индекс: " + index + ". Индекс должен быть в диапазоне от 0 до " + (length - 1));
-        }
-
-        return items[index];
     }
 
     @Override
@@ -160,16 +162,14 @@ public class MyArrayList<E> implements List<E> {
     // добавление коллекции в конец списка
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        if (c.isEmpty()) {
-            return false;
-        }
-
         return addAll(length, c);
     }
 
     // добавление коллекции по индексу
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
+        checkIndex(index, length);
+
         if (c.isEmpty()) {
             return false;
         }
@@ -211,10 +211,6 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        if (c.isEmpty()) {
-            return false;
-        }
-
         int currentSize = size();
 
         for (int i = 0; i < length; i++) {
@@ -238,10 +234,7 @@ public class MyArrayList<E> implements List<E> {
     // добавление по индексу
     @Override
     public void add(int index, E element) {
-        // Проверка индекса
-        if (index > length || index < 0) {
-            throw new IndexOutOfBoundsException("Переданный индекс = : " + index + ". Индекс должен быть больше нуля и меньше либо равен длине списка " + length);
-        }
+        checkIndex(index, length);
 
         if (index == length) {
             add(element);
@@ -261,21 +254,19 @@ public class MyArrayList<E> implements List<E> {
     // удаление по индексу
     @Override
     public E remove(int index) {
-        // Проверка индекса
-        if (index >= length || index < 0) {
-            throw new IndexOutOfBoundsException("Передан индекс: " + index + ". Индекс должен быть в диапазоне от 0 до " + (length - 1));
-        }
+        checkIndex(index, length);
+
+        E result = items[index];
 
         if (index < length - 1) {
-            System.arraycopy(items, index + 1,
-                    items, index, length - index - 1);
+            System.arraycopy(items, index + 1, items, index, length - index - 1);
         }
 
         items[length - 1] = null;
         length--;
         modCount++;
 
-        return null;
+        return result;
     }
 
     @Override
@@ -319,16 +310,16 @@ public class MyArrayList<E> implements List<E> {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("[ ");
+        stringBuilder.append("[");
 
-        for (E item : items) {
-            stringBuilder.append(item).append(", ");
+        for (int i = 0; i < size(); i++) {
+            stringBuilder.append(items[i]).append(", ");
         }
 
         if (stringBuilder.length() > 2) {
             stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
         }
-        stringBuilder.append(" ]");
+        stringBuilder.append("]");
 
         return stringBuilder.toString();
     }
