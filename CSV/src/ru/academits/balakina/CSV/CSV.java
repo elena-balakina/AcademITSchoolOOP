@@ -8,6 +8,11 @@ import java.util.Scanner;
 
 public class CSV {
     public static void main(String[] args) {
+        if (args.length != 2) {
+            throw new IllegalArgumentException("Для работы программы необходимо 2 аргумента - путь до входного и выходного файлов" + System.lineSeparator() +
+                    "входной файл в формате CSV, выходной - в формате HTML");
+        }
+
         String inputFilePath = args[0];
         String outputFilePath = args[1];
 
@@ -18,7 +23,7 @@ public class CSV {
             writer.println("<html>");
             writer.println("<head>");
             writer.println("<title> Table from CSV </title>");
-            writer.println("<meta name = \"Table from CSV\" content = \"HTML,CSS,PHP,JavaScript charset=\"UTF-8\">");
+            writer.println("<meta name=\"Table from CSV\" content=\"HTML,CSS,PHP,JavaScript charset=\"UTF-8\"\">");
             writer.println("</head>");
             writer.println("<body>");
             writer.println("<table>");
@@ -36,7 +41,6 @@ public class CSV {
                     if (currentLine.length() > 0) {
                         writer.print("<tr> <td>");
                     } else {
-                        writer.println();
                         continue;
                     }
                 }
@@ -85,7 +89,15 @@ public class CSV {
                             writer.print("</td> <td>");
                         }
                     } else {
-                        writer.print(currentChar);
+                        if (currentChar == '<') {
+                            writer.print("&lt");
+                        } else if (currentChar == '>') {
+                            writer.print("&gt");
+                        } else if (currentChar == '&') {
+                            writer.print("&amp");
+                        } else {
+                            writer.print(currentChar);
+                        }
                     }
                 }
 
@@ -100,7 +112,6 @@ public class CSV {
             writer.println("</table>");
             writer.println("</body>");
             writer.println("</html>");
-
         } catch (FileNotFoundException e) {
             System.out.println("Файл для считывания строк не найден");
         }
