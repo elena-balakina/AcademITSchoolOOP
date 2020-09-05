@@ -4,7 +4,7 @@ import java.util.*;
 
 public class HashTable<T> implements Collection<T> {
     private final static int DEFAULT_CAPACITY = 10;
-    private ArrayList<T>[] hashTableArray;
+    private final ArrayList<T>[] hashTableArray;
     private int length;
     private int modCount;
 
@@ -16,8 +16,8 @@ public class HashTable<T> implements Collection<T> {
 
     // Конструктор c 1 аргументом - capacity
     public HashTable(int capacity) {
-        if (capacity < 0) {
-            throw new IllegalArgumentException("Передана вместимость списка " + capacity + ". Вместимости должна быть неотрицательным значением.");
+        if (capacity < 1) {
+            throw new IllegalArgumentException("Передана вместимость списка " + capacity + ". Вместимости должна быть больше 0.");
         }
 
         //noinspection unchecked
@@ -57,7 +57,7 @@ public class HashTable<T> implements Collection<T> {
     private class MyListIterator implements Iterator<T> {
         private int currentHashTableIndex;
         private int currentListIndex;
-        private int currentModCount;
+        private final int currentModCount;
 
         public MyListIterator() {
             currentHashTableIndex = 0;
@@ -67,7 +67,7 @@ public class HashTable<T> implements Collection<T> {
 
         @Override
         public boolean hasNext() {
-            return currentHashTableIndex + 1 < length;
+            return currentHashTableIndex < length;
         }
 
         @Override
@@ -102,14 +102,12 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public Object[] toArray() {
-        int index = 0;
+        int i = 0;
         Object[] array = new Object[length];
 
         for (T item : this) {
-            if (item != null) {
-                array[index] = item;
-                index++;
-            }
+            array[i] = item;
+            i++;
         }
 
         return array;
@@ -131,9 +129,7 @@ public class HashTable<T> implements Collection<T> {
             array[length] = null;
         }
 
-
-        //noinspection unchecked
-        return (T1[]) array;
+        return a;
     }
 
     @Override
@@ -153,11 +149,11 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public boolean remove(Object o) {
-        if (length == 0) {
+        int index = getIndex(o);
+
+        if (hashTableArray[index] == null) {
             return false;
         }
-
-        int index = getIndex(o);
 
         if (hashTableArray[index].remove(o)) {
             length--;
@@ -170,10 +166,6 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        if (c.isEmpty()) {
-            throw new IllegalArgumentException("Невозможно выполнить contains для пустой коллекции");
-        }
-
         for (Object e : c) {
             if (!contains(e)) {
                 return false;
@@ -185,34 +177,24 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        if (containsAll(c)) {
-            return false;
-        }
+        int oldLength = length;
 
         for (T e : c) {
             add(e);
         }
 
-        return true;
+        return length != oldLength;
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        if (isEmpty()) {
-            throw new NullPointerException("Невозможно удалить коллекцию. Хэш-таблица пуста");
-        }
-
-        if (c.isEmpty()) {
-            throw new IllegalArgumentException("Невозможно выполнить contains для пустой коллекции");
-        }
-
         int oldLength = length;
 
-        for (ArrayList<T> a : hashTableArray) {
-            if (a != null) {
-                length -= a.size();
-                a.removeAll(c);
-                length += a.size();
+        for (ArrayList<T> array : hashTableArray) {
+            if (array != null) {
+                length -= array.size();
+                array.removeAll(c);
+                length += array.size();
             }
         }
 
@@ -225,21 +207,13 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        if (isEmpty()) {
-            throw new NullPointerException("Невозможно произвести операцию retain для коллекции. Хэш-таблица пуста");
-        }
-
-        if (c.isEmpty()) {
-            throw new IllegalArgumentException("Невозможно выполнить retain для пустой коллекции");
-        }
-
         int oldLength = length;
 
-        for (ArrayList<T> a : hashTableArray) {
-            if (a != null) {
-                length -= a.size();
-                a.retainAll(c);
-                length += a.size();
+        for (ArrayList<T> array : hashTableArray) {
+            if (array != null) {
+                length -= array.size();
+                array.retainAll(c);
+                length += array.size();
             }
         }
 
@@ -252,15 +226,9 @@ public class HashTable<T> implements Collection<T> {
 
     @Override
     public void clear() {
-        if (length != 0) {
-            for (ArrayList<T> item : hashTableArray) {
-                if (item != null) {
-                    item.clear();
-                }
-            }
-
-            length = 0;
-        }
+        Arrays.fill(hashTableArray, null);
+        length = 0;
+        modCount++;
     }
 
     @Override
