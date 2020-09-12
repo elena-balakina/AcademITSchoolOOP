@@ -53,11 +53,21 @@ public class Main {
         System.out.println("size = " + hashTable.size());
         System.out.println();
 
-        System.out.println("Добавим в хэш-таблицу [7, 4, 2, 3]: " + hashTable.addAll(new ArrayList<>(Arrays.asList(7, 4, 2, 3))));
+        System.out.println("Добавим в хэш-таблицу [6, 7, 4, 2, 3, 8, 8, 9]: " + hashTable.addAll(new ArrayList<>(Arrays.asList(6, 7, 4, 2, 3, 8, 8, 9))));
         System.out.println(hashTable);
         System.out.println("size = " + hashTable.size());
         System.out.println();
 
+        // Проверка итератора
+        int i = 1;
+
+        System.out.println("(!) Проверка итератора:");
+        for (int item : hashTable) {
+            System.out.println("Element " + i + ": " + item);
+            i++;
+        }
+
+        System.out.println();
         System.out.println("Удалим из хэш-таблицы [5, 10, 20]: " + hashTable.removeAll(arrayToCheck));
         System.out.println(hashTable);
         System.out.println("size = " + hashTable.size());

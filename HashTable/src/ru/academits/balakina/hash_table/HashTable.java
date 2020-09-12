@@ -55,19 +55,21 @@ public class HashTable<T> implements Collection<T> {
     }
 
     private class MyListIterator implements Iterator<T> {
-        private int currentHashTableIndex;
+        private int currentHashTableArrayIndex;
+        private int sumIndex;
         private int currentListIndex;
         private final int currentModCount;
 
         public MyListIterator() {
-            currentHashTableIndex = 0;
-            currentListIndex = 0;
+            currentHashTableArrayIndex = 0;
+            sumIndex = -1;
+            currentListIndex = -1;
             currentModCount = modCount;
         }
 
         @Override
         public boolean hasNext() {
-            return currentHashTableIndex < length;
+            return sumIndex + 1 < length;
         }
 
         @Override
@@ -80,19 +82,19 @@ public class HashTable<T> implements Collection<T> {
                 throw new ConcurrentModificationException("В коллекции изменилось количество элементов за время обхода");
             }
 
-            for (int i = currentHashTableIndex; i < hashTableArray.length; i++) {
-                if (hashTableArray[i] != null) {
+            for (int i = currentHashTableArrayIndex; i < hashTableArray.length; i++) {
+                if (hashTableArray[i] == null) {
+                    currentHashTableArrayIndex++;
+                } else {
                     if (currentListIndex + 1 < hashTableArray[i].size()) {
                         currentListIndex++;
+                        sumIndex++;
                     } else {
-                        currentHashTableIndex++;
+                        currentHashTableArrayIndex++;
                         currentListIndex = -1;
                         continue;
                     }
-
                     return hashTableArray[i].get(currentListIndex);
-                } else {
-                    currentHashTableIndex++;
                 }
             }
 
@@ -190,11 +192,11 @@ public class HashTable<T> implements Collection<T> {
     public boolean removeAll(Collection<?> c) {
         int oldLength = length;
 
-        for (ArrayList<T> array : hashTableArray) {
-            if (array != null) {
-                length -= array.size();
-                array.removeAll(c);
-                length += array.size();
+        for (ArrayList<T> list : hashTableArray) {
+            if (list != null) {
+                length -= list.size();
+                list.removeAll(c);
+                length += list.size();
             }
         }
 
@@ -209,11 +211,11 @@ public class HashTable<T> implements Collection<T> {
     public boolean retainAll(Collection<?> c) {
         int oldLength = length;
 
-        for (ArrayList<T> array : hashTableArray) {
-            if (array != null) {
-                length -= array.size();
-                array.retainAll(c);
-                length += array.size();
+        for (ArrayList<T> list : hashTableArray) {
+            if (list != null) {
+                length -= list.size();
+                list.retainAll(c);
+                length += list.size();
             }
         }
 
