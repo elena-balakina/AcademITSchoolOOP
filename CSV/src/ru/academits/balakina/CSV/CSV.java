@@ -9,8 +9,9 @@ import java.util.Scanner;
 public class CSV {
     public static void main(String[] args) {
         if (args.length != 2) {
-            throw new IllegalArgumentException("Для работы программы необходимо 2 аргумента - путь до входного и выходного файлов" + System.lineSeparator() +
-                    "входной файл в формате CSV, выходной - в формате HTML");
+            System.out.println("Для работы программы необходимо 2 аргумента - путь до входного и выходного файлов:" + System.lineSeparator() +
+                    "входной файл в формате CSV, выходной файл - в формате HTML");
+            return;
         }
 
         String inputFilePath = args[0];
@@ -90,11 +91,11 @@ public class CSV {
                         }
                     } else {
                         if (currentChar == '<') {
-                            writer.print("&lt");
+                            writer.print("&lt;");
                         } else if (currentChar == '>') {
-                            writer.print("&gt");
+                            writer.print("&gt;");
                         } else if (currentChar == '&') {
-                            writer.print("&amp");
+                            writer.print("&amp;");
                         } else {
                             writer.print(currentChar);
                         }
