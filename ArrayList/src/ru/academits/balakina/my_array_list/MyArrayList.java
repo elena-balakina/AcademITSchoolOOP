@@ -32,7 +32,7 @@ public class MyArrayList<E> implements List<E> {
         }
     }
 
-    private void checkIndex(int index, int maxPossibleIndex) {
+    private static void checkIndex(int index, int maxPossibleIndex) {
         if (index > maxPossibleIndex || index < 0) {
             throw new IndexOutOfBoundsException("Передан индекс: " + index + ". Индекс должен быть в диапазоне от 0 до " + maxPossibleIndex);
         }
@@ -81,7 +81,7 @@ public class MyArrayList<E> implements List<E> {
 
         @Override
         public boolean hasNext() {
-            return currentIndex + 1 < size();
+            return currentIndex + 1 < length;
         }
 
         @Override
@@ -197,7 +197,7 @@ public class MyArrayList<E> implements List<E> {
             return false;
         }
 
-        int currentSize = size();
+        int initialSize = length;
 
         for (int i = 0; i < length; i++) {
             if (c.contains(items[i])) {
@@ -206,12 +206,12 @@ public class MyArrayList<E> implements List<E> {
             }
         }
 
-        return currentSize != size();
+        return initialSize != length;
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        int currentSize = size();
+        int initialSize = length;
 
         for (int i = 0; i < length; i++) {
             if (!c.contains(items[i])) {
@@ -220,7 +220,7 @@ public class MyArrayList<E> implements List<E> {
             }
         }
 
-        return currentSize != size();
+        return initialSize != length;
     }
 
     @Override
@@ -254,7 +254,7 @@ public class MyArrayList<E> implements List<E> {
     // удаление по индексу
     @Override
     public E remove(int index) {
-        checkIndex(index, length);
+        checkIndex(index, length - 1);
 
         E result = items[index];
 
@@ -312,7 +312,7 @@ public class MyArrayList<E> implements List<E> {
 
         stringBuilder.append("[");
 
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < length; i++) {
             stringBuilder.append(items[i]).append(", ");
         }
 
