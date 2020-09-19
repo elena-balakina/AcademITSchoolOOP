@@ -1,18 +1,18 @@
 package ru.academits.balakina.model;
 
-public class CelsiusScale implements TemperatureScale{
+public class CelsiusScale implements TemperatureScale {
     @Override
-    public double convertToCelsius(double inputValue) {
-        return inputValue;
+    public double convertToCelsius(double temperature) {
+        return temperature;
     }
 
     @Override
-    public double convertFromCelsius(double inputValue) {
-        return inputValue;
+    public double convertFromCelsius(double temperature) {
+        return temperature;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "град. Цельсия (С)";
     }
 }

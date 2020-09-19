@@ -1,18 +1,18 @@
 package ru.academits.balakina.model;
 
-public class KelvinScale implements TemperatureScale{
+public class KelvinScale implements TemperatureScale {
     @Override
-    public double convertToCelsius(double inputValue) {
-        return Math.round((inputValue - 273.15) * 100.0) / 100.0;
+    public double convertToCelsius(double temperature) {
+        return temperature - 273.15;
     }
 
     @Override
-    public double convertFromCelsius(double inputValue) {
-        return Math.round((inputValue + 273.15) * 100.0) / 100.0;
+    public double convertFromCelsius(double temperature) {
+        return temperature + 273.15;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "град. Кельвина (К)";
     }
 }

@@ -1,5 +1,6 @@
 package ru.academits.balakina.view;
 
+import ru.academits.balakina.controller.TemperatureConverter;
 import ru.academits.balakina.model.TemperatureScale;
 
 import javax.swing.*;
@@ -8,7 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class TemperatureConverterView {
-    TemperatureScale[] scales;
+    private final TemperatureScale[] scales;
 
     public TemperatureConverterView(TemperatureScale[] scales) {
         this.scales = scales;
@@ -19,7 +20,7 @@ public class TemperatureConverterView {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("Not possible to set system type of interface");
             }
 
             Image icon = Toolkit.getDefaultToolkit().getImage("Temperature/src/ru/academits/balakina/icon.png");
@@ -55,9 +56,8 @@ public class TemperatureConverterView {
             constraints.gridx = 0;
             panel.add(labelFomTemperature, constraints);
 
-            // 2 ячейка//
-            @SuppressWarnings({"unchecked", "rawtypes"}) JComboBox menu1 = new JComboBox(scales);
-
+            // 2 ячейка
+            JComboBox<TemperatureScale> menu1 = new JComboBox<>(scales);
             constraints.gridx = 1;
             panel.add(menu1, constraints);
 
@@ -69,7 +69,7 @@ public class TemperatureConverterView {
             panel.add(labelToTemperature, constraints);
 
             // 2 ячейка
-            @SuppressWarnings({"unchecked", "rawtypes"}) JComboBox menu2 = new JComboBox(scales);
+            JComboBox<TemperatureScale> menu2 = new JComboBox<>(scales);
             constraints.gridx = 1;
             panel.add(menu2, constraints);
 
@@ -116,21 +116,22 @@ public class TemperatureConverterView {
 
             // Listeners
             buttonConvert.addActionListener(e -> {
-                        try {
-                            TemperatureScale scaleFrom = (TemperatureScale) menu1.getSelectedItem();
-                            TemperatureScale scaleTo = (TemperatureScale) menu2.getSelectedItem();
-                            String inputString = inputValue.getText();
-                            double inputTemperature = Double.parseDouble(inputString);
-                            double outputTemperature = scaleTo.convertFromCelsius(scaleFrom.convertToCelsius(inputTemperature));
+                try {
+                    TemperatureScale scaleFrom = (TemperatureScale) menu1.getSelectedItem();
+                    TemperatureScale scaleTo = (TemperatureScale) menu2.getSelectedItem();
+                    String inputString = inputValue.getText();
+                    double inputTemperature = Double.parseDouble(inputString);
 
-                            resultValue.setText(String.valueOf(outputTemperature));
-                            inputValue.requestFocusInWindow();
-                        } catch (NumberFormatException exception) {
-                            resultValue.setText("ВВЕДИТЕ ЧИСЛО");
-                            inputValue.requestFocusInWindow();
-                        }
-                    }
-            );
+                    TemperatureConverter converter = new TemperatureConverter();
+                    double outputTemperature = converter.convert(scaleFrom, scaleTo, inputTemperature);
+
+                    resultValue.setText(String.valueOf(outputTemperature));
+                    inputValue.requestFocusInWindow();
+                } catch (NumberFormatException exception) {
+                    resultValue.setText("ВВЕДИТЕ ЧИСЛО");
+                    inputValue.requestFocusInWindow();
+                }
+            });
 
             inputValue.addKeyListener(new KeyAdapter() {
                 @Override
@@ -147,11 +148,10 @@ public class TemperatureConverterView {
             });
 
             buttonClean.addActionListener(e -> {
-                        inputValue.setText("");
-                        resultValue.setText("");
-                        inputValue.requestFocusInWindow();
-                    }
-            );
+                inputValue.setText("");
+                resultValue.setText("");
+                inputValue.requestFocusInWindow();
+            });
         });
     }
 }
