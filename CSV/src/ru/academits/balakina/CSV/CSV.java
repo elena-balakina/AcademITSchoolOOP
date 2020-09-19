@@ -24,7 +24,7 @@ public class CSV {
             writer.println("<html>");
             writer.println("<head>");
             writer.println("<title> Table from CSV </title>");
-            writer.println("<meta name=\"Table from CSV\" content=\"HTML,CSS,PHP,JavaScript charset=\"UTF-8\"\">");
+            writer.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">");
             writer.println("</head>");
             writer.println("<body>");
             writer.println("<table>");
