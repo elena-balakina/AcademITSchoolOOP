@@ -56,20 +56,20 @@ public class HashTable<T> implements Collection<T> {
 
     private class MyListIterator implements Iterator<T> {
         private int currentHashTableArrayIndex;
-        private int sumIndex;
+        private int elementIndex;
         private int currentListIndex;
         private final int currentModCount;
 
         public MyListIterator() {
             currentHashTableArrayIndex = 0;
-            sumIndex = -1;
+            elementIndex = -1;
             currentListIndex = -1;
             currentModCount = modCount;
         }
 
         @Override
         public boolean hasNext() {
-            return sumIndex + 1 < length;
+            return elementIndex + 1 < length;
         }
 
         @Override
@@ -88,7 +88,7 @@ public class HashTable<T> implements Collection<T> {
                 } else {
                     if (currentListIndex + 1 < hashTableArray[i].size()) {
                         currentListIndex++;
-                        sumIndex++;
+                        elementIndex++;
                     } else {
                         currentHashTableArrayIndex++;
                         currentListIndex = -1;
