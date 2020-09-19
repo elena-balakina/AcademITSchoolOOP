@@ -58,12 +58,12 @@ public class Main {
         System.out.println();
 
         // addAll в конец
-        MyArrayList<String> arrayToAdd = new MyArrayList<>(3);
-        arrayList.add("five");
-        arrayList.add("six");
-        arrayList.add("seven");
+        MyArrayList<String> listForAdding1 = new MyArrayList<>(3);
+        listForAdding1.add("five");
+        listForAdding1.add("six");
+        listForAdding1.add("seven");
 
-        arrayList.addAll(arrayToAdd);
+        arrayList.addAll(listForAdding1);
         System.out.println("Список: ");
         System.out.println(arrayList);
         System.out.println("Длина списка = " + arrayList.size());
@@ -72,7 +72,6 @@ public class Main {
         // add по индексу
         arrayList.add(1, "one");
         arrayList.add(2, "two");
-
 
         // remove по индексу
         arrayList.remove(3);
@@ -84,12 +83,12 @@ public class Main {
 
         // addAll в конец списка
         System.out.println("Добавим в конец списка {eight, nine, ten}");
-        MyArrayList<String> arrayToAdd2 = new MyArrayList<>(3);
-        arrayToAdd2.add("eight");
-        arrayToAdd2.add("nine");
-        arrayToAdd2.add("ten");
+        MyArrayList<String> listForAdding2 = new MyArrayList<>(3);
+        listForAdding2.add("eight");
+        listForAdding2.add("nine");
+        listForAdding2.add("ten");
 
-        arrayList.addAll(arrayToAdd2);
+        arrayList.addAll(listForAdding2);
 
         System.out.println("Список: ");
         System.out.println(arrayList);
@@ -98,11 +97,11 @@ public class Main {
 
         // addAll по индексу
         System.out.println("Добавим {six, six} по индексу 6 (после six)");
-        MyArrayList<String> arrayToAdd3 = new MyArrayList<>(2);
-        arrayToAdd3.add("six");
-        arrayToAdd3.add("six");
+        MyArrayList<String> listForAdding3 = new MyArrayList<>(2);
+        listForAdding3.add("six");
+        listForAdding3.add("six");
 
-        arrayList.addAll(6, arrayToAdd3);
+        arrayList.addAll(6, listForAdding3);
 
         System.out.println("Список: ");
         System.out.println(arrayList);
@@ -110,22 +109,22 @@ public class Main {
         System.out.println();
 
         // containsAll
-        MyArrayList<String> arrayToAdd4 = new MyArrayList<>(1);
-        arrayToAdd4.add("six");
-        System.out.println("Список содержит {six} ??? --> " + arrayList.containsAll(arrayToAdd4));
+        MyArrayList<String> listForCheckingContainsAll = new MyArrayList<>(1);
+        listForCheckingContainsAll.add("six");
+        System.out.println("Список содержит {six} ??? --> " + arrayList.containsAll(listForCheckingContainsAll));
         System.out.println();
 
         // removeAll
-        System.out.println("Удалим {six} " + arrayList.removeAll(arrayToAdd4));
+        System.out.println("Удалим {six} " + arrayList.removeAll(listForCheckingContainsAll));
 
         System.out.println("Список: ");
         System.out.println(arrayList);
         System.out.println("Длина списка = " + arrayList.size());
-        System.out.println("Список содержит {six} ??? --> " + arrayList.containsAll(arrayToAdd4));
+        System.out.println("Список содержит {six} ??? --> " + arrayList.containsAll(listForCheckingContainsAll));
         System.out.println();
 
         // retainAll
-        System.out.println("Удалим все кроме {eight, nine, ten} " + arrayList.retainAll(arrayToAdd2));
+        System.out.println("Удалим все кроме {eight, nine, ten} " + arrayList.retainAll(listForAdding2));
 
         System.out.println("Список: ");
         System.out.println(arrayList);
